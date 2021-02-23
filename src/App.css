@@ -1,0 +1,144 @@
+* { 
+    /* overflow-y: hidden; */
+    box-sizing: border-box;
+    margin:  0;
+    padding: 0;
+    font-family: 'Encode Sans Expanded' , sans-serif;
+  }
+
+/* Custom scrollbar CSS */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px; 
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
+    -webkit-border-radius: 6px;
+    border-radius: 6px; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 8px;
+    border-radius: 6px;
+    background: gray; 
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(220, 220, 220, 0.2); 
+}
+
+.modal-border div {
+    border-radius: 10px;
+}
+
+.row-margin-bottom {
+    margin-bottom: 10px;
+}
+
+.row-margin-bottom2 {
+    margin-bottom: 20px;
+}
+
+.row-margin-bottom3 {
+    margin-bottom: 30px;
+}
+
+.row-margin-bottom4 {
+    margin-bottom: 40px;
+}
+
+.row-margin-top {
+    margin-top: 10px;
+}
+
+.row-margin-top2 {
+    margin-top: 20px;
+}
+
+.row-margin-top3 {
+    margin-top: 30px;
+}
+
+.row-margin-top4 {
+    margin-top: 40px;
+}
+
+.trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 24px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+  
+.trigger:hover {
+    color: #1890ff;
+}
+  
+.site-layout .site-layout-background {
+    background: #fff;
+}
+
+.ant-menu-inline-collapsed{
+    width: 90px;
+    min-height: 100vh;
+}
+
+.ant-layout-sider {
+    min-height: 100vh;   
+}
+
+.ant-layout-sider-dark {
+    background-color: #006064 !important; 
+    flex: 0 0 250px !important; 
+    max-width: 250px !important; 
+    min-width: 250px !important; 
+    width: 250px !important;
+}
+
+.ant-layout-sider-collapsed {
+    background-color: #006064 !important; 
+    flex: 0 0 95px !important; 
+    max-width: 95px !important; 
+    min-width: 95px !important;
+    width: 95px !important;
+    font-size: 16px;
+}
+
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub{
+    background: #006064 !important; 
+}
+
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #519c2a !important;
+    font-weight: bold;
+    border-right: 7px solid #fff !important;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    width: 250px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.12);
+    margin-top: 20px;
+    padding-top: 5px;
+    text-align: center;
+    font-size: 12px;
+    font-family: 'Encode Sans Expanded';
+    color: rgba(255, 255, 255, 0.65);
+    /* transition-duration: 0.2s; */
+  }
+  
+.footer-hidden {
+    display: none;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.display-inline-block {
+    display: inline-block;
+}

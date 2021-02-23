@@ -1,0 +1,105 @@
+[
+    {
+      "title": "NCR",
+      "id": 13,
+      "value": "NCR",
+      "regCode": "13"
+    },
+    {
+      "title": "Region 1",
+      "id": 1,
+      "value": "R01",
+      "regCode": "01"
+    },
+    {
+      "title": "Region 2",
+      "id": 2,
+      "value": "R02",
+      "regCode": "02"
+    },
+    {
+      "title": "Region 3",
+      "id": 3,
+      "value": "R03",
+      "regCode": "03"
+    },
+    {
+      "title": "Region 4",
+      "id": 4,
+      "value": "R04",
+      "regCode": "04"
+    },
+    {
+      "title": "Region 5",
+      "id": 5,
+      "value": "R05",
+      "regCode": "05"
+    },
+    {
+      "title": "Region 6",
+      "id": 6,
+      "value": "R06",
+      "regCode": "06"
+    },
+    {
+      "title": "Region 7",
+      "id": 7,
+      "value": "R07",
+      "regCode": "07"
+    },
+    {
+      "title": "Region 8",
+      "id": 8,
+      "value": "R08",
+      "regCode": "08"
+    },
+    {
+      "title": "Region 9",
+      "id": 9,
+      "value": "R09",
+      "regCode": "09"
+    },
+    {
+      "title": "Region 10",
+      "id": 10,
+      "value": "R10",
+      "regCode": "10"
+    },
+    {
+      "title": "Region 11",
+      "id": 11,
+      "value": "R11",
+      "regCode": "11"
+    },
+    {
+      "title": "Region 12",
+      "id": 12,
+      "value": "R12",
+      "regCode": "12"
+    },
+    {
+      "title": "Region 13",
+      "id": 16,
+      "value": "R13",
+      "regCode": "16"
+    },
+    {
+      "title": "CAR",
+      "id": 14,
+      "value": "CAR",
+      "regCode": "14"
+    },
+    {
+      "title": "ARMM",
+      "id": 15,
+      "value": "ARMM",
+      "regCode": "15"
+    },
+    {
+      "title": "MIMAROPA",
+      "id": 17,
+      "value": "MIMAROPA",
+      "regCode": "17"
+    }
+]
+

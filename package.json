@@ -1,0 +1,87 @@
+{
+  "name": "sagip_buhay_saka_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@ant-design/icons": "^4.3.0",
+    "antd": "^4.8.2",
+    "aos": "^2.3.4",
+    "axios": "^0.21.0",
+    "env-cmd": "^10.1.0",
+    "formik": "^2.2.5",
+    "framer-motion": "^2.9.4",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "normalize.css": "^8.0.1",
+    "react": "^17.0.1",
+    "react-component-debounce": "0.0.4",
+    "react-dom": "^17.0.1",
+    "react-highlight-words": "^0.16.0",
+    "react-icons": "^3.11.0",
+    "react-redux": "^7.2.2",
+    "react-resize-detector": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.0",
+    "react-scroll": "^1.8.1",
+    "recharts": "^1.8.5",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "styled-components": "^5.2.1",
+    "typescript": "^4.0.5",
+    "web-vitals": "^0.2.4",
+    "yup": "^0.29.3"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.1",
+    "@testing-library/user-event": "^12.2.0",
+    "@types/antd": "^1.0.0",
+    "@types/aos": "^3.0.3",
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^12.19.4",
+    "@types/react": "^16.9.56",
+    "@types/react-dom": "^16.9.9",
+    "@types/react-highlight-words": "^0.16.1",
+    "@types/react-redux": "^7.1.11",
+    "@types/react-router-dom": "^5.1.6",
+    "@types/react-resize-detector": "^5.0.0",
+    "@types/react-scroll": "^1.8.2",
+    "@types/recharts": "^1.8.18",
+    "@types/redux-logger": "^3.0.8",
+    "@types/styled-components": "^5.1.4",
+    "@types/yup": "^0.29.9"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "start:testing": "env-cmd -f .env.staging react-scripts start",
+    "start:production": "env-cmd -f .env.production react-scripts start",
+    "build": "react-scripts build",
+    "build:staging": "env-cmd -f .env.staging react-scripts build",
+    "build:production": "env-cmd -f .env.production react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
