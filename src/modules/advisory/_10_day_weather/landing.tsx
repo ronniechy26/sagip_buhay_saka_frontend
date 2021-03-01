@@ -27,6 +27,7 @@ import { asyncActions as AdvisoryAction } from '../../../ducks/AdvisoryDucks';
 import { IAdvisory } from '../../../models/AdvisoryModel';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
+import useGetProvince from '../../../hooks/useGetProvince';
 
 const TextArea = reactComponentDebounce(150, 200)(Input.TextArea);
 
@@ -79,7 +80,8 @@ const Landing : React.FC<IProps> = ({
     const add_loading = (advisory_status['ADVISORIES_ADD_10DAY'] ? advisory_status['ADVISORIES_ADD_10DAY'].fetching : false);
     const [ flag, setFlag ] = useState(false);
     const [ count ] = useGetNumberOfRecipient();
-
+    const [ province ] = useGetProvince();
+    
     useEffect(() => {
         fetch_livelihoods();
         fetch_production_stages();
@@ -180,7 +182,6 @@ const Landing : React.FC<IProps> = ({
     }, [flag, setFlag, advisory_status, history]);
 
     const sendAdvisory = async () =>{
-        setFlag(true);
         if(smsOutput.length > 160){
             notification.warning({
                 message : 'SMS character count exceeded!',
@@ -195,8 +196,11 @@ const Landing : React.FC<IProps> = ({
                 forecast_date : data.forecast_date,
                 forecast_data : dates
             }
+            if(user_log?.role !== 'LGU' && province){
+                payload['province'] = province;
+            }
             add_10_day(payload);
-            setFlag(false);
+            setTimeout(() => setFlag(true), 500);
         }catch (errInfo) {
             console.log('Validate Failed:', errInfo);
         }

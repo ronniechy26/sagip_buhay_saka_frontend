@@ -8,6 +8,7 @@ import { Container, ModalContainer, LandingHeader} from '../../../components';
 import {CharCount, SpanItalic } from '../Styles'
 import Header from '../_10_day_weather/components/Header';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
+import useGetProvince from '../../../hooks/useGetProvince';
 
 import { IState } from '../../../ducks';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
@@ -22,6 +23,7 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
     const [ smsOutput, setSmsIutput ] = useState('');
     const [ flag, setFlag ] = useState(false);
     const [ count ] = useGetNumberOfRecipient();
+    const [ province ] = useGetProvince();
 
     useEffect(() => {
         if (flag && advisory_status['ADVISORIES_ADD_OTHER_WEATHER'] ) {
@@ -60,9 +62,9 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
             const data = await form.validateFields();
             const payload = { 
                 ...data,
-                sms_output : smsOutput
+                sms_output : smsOutput,
+                province
             }
-            console.log(payload);
             add_other_weather(payload);
             setTimeout(() => setFlag(true), 500);
         }catch (errInfo) {

@@ -13,11 +13,12 @@ import { IState } from '../../../ducks';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
+import useGetProvince from '../../../hooks/useGetProvince';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
 
-const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_status}) => {
+const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_status, user_log}) => {
     const [visible, setVisible] = useState(false);
     const history = useHistory();
     const [ form ] = Form.useForm();
@@ -26,6 +27,7 @@ const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_statu
     const add_loading = (advisory_status['ADVISORIES_ADD_GALE_WARNING'] ? 
                 advisory_status['ADVISORIES_ADD_GALE_WARNING'].fetching : false);
     const [ count ] = useGetNumberOfRecipient();
+    const [ province ] = useGetProvince();
 
     useEffect(() => {
         if (flag && advisory_status['ADVISORIES_ADD_GALE_WARNING'] ) {
@@ -54,6 +56,9 @@ const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_statu
             const payload = { 
                 ...data,
                 sms_output : smsOutput
+            }
+            if(user_log?.role !== 'LGU' && province){
+                payload['province'] = province;
             }
             add_gale_warning(payload);
             setTimeout(() => setFlag(true), 500);

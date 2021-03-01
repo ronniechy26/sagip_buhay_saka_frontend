@@ -13,6 +13,7 @@ import { IState } from '../../../ducks';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
+import useGetProvince from '../../../hooks/useGetProvince';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -24,6 +25,7 @@ const TropicalCycloneLanding : React.FC<IProps> = ({add_tropical_cyclone, adviso
     const [ flag, setFlag ] = useState(false);
     const add_loading = (advisory_status['ADVISORIES_ADD_TROPICAL_CYCLONE'] ? advisory_status['ADVISORIES_ADD_TROPICAL_CYCLONE'].fetching : false);
     const [ count ] = useGetNumberOfRecipient();
+    const [ province ] = useGetProvince();
 
     useEffect(() => {
         if (flag && advisory_status['ADVISORIES_ADD_TROPICAL_CYCLONE'] ) {
@@ -78,9 +80,9 @@ const TropicalCycloneLanding : React.FC<IProps> = ({add_tropical_cyclone, adviso
             const data = await form.validateFields();
             const payload = { 
                 ...data,
-                sms_output : smsOutput
+                sms_output : smsOutput,
+                province 
             }
-            console.log(payload);
             add_tropical_cyclone(payload);
             setTimeout(() => setFlag(true), 500);
         }catch (errInfo) {

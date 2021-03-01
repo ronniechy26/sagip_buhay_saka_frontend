@@ -14,6 +14,7 @@ import { IState } from '../../../ducks';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
+import useGetProvince from '../../../hooks/useGetProvince';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -26,6 +27,7 @@ const EmergencyLanding : React.FC<IProps> = ({add_emergency, advisory_status, us
     const [ flag, setFlag ] = useState(false);
     const add_loading = (advisory_status['ADVISORIES_ADD_EMERGENCY'] ? advisory_status['ADVISORIES_ADD_EMERGENCY'].fetching : false);
     const [ count ] = useGetNumberOfRecipient();
+    const [ province ] = useGetProvince();
 
     useEffect(() => {
         if (flag && advisory_status['ADVISORIES_ADD_EMERGENCY'] ) {
@@ -54,6 +56,9 @@ const EmergencyLanding : React.FC<IProps> = ({add_emergency, advisory_status, us
             const payload = { 
                 ...data,
                 sms_output : smsOutput
+            }
+            if(user_log?.role !== 'LGU' && province){
+                payload['province'] = province;
             }
             add_emergency(payload);
             setTimeout(() => setFlag(true), 500);

@@ -19,6 +19,7 @@ import { getSeedActiveStatus } from '../../../selectors/SeedSelector';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
+import useGetProvince from '../../../hooks/useGetProvince';
 
 interface IMonthTable {
     id : string;
@@ -35,7 +36,7 @@ const init = {
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
 
-const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasonal, status}) => {
+const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasonal, status, user_log}) => {
     const [ form ] = Form.useForm();
     const history = useHistory();
     const childRef:any = useRef(null);
@@ -47,6 +48,7 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
                 status['ADVISORIES_ADD_SEASONAL'].fetching : false);
     const [visible, setVisible] = useState(false);
     const [ count ] = useGetNumberOfRecipient();
+    const [ province ] = useGetProvince();
 
     useEffect(() => {
         fetch_seeds()
@@ -91,6 +93,9 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
                 sms_output : smsOutput,
                 forecast_date : moment().format('MM-DD-YYYY'),
                 forecast_data : data
+            }
+            if(user_log?.role !== 'LGU' && province){
+                payload['province'] = province;
             }
             add_seasonal(payload);
             setTimeout(() => setFlag(true), 500);
@@ -253,6 +258,7 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
 
 
 const mapStateToProps = (state: IState) => ({
+    user_log : state.UserReducer.data,
     best_seed : getSeedActiveStatus(state),
     status : getAdvisoryStatus(state),
 });
