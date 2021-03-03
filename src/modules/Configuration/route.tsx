@@ -10,6 +10,9 @@ import PreProduction from './other_production/pages/landing';
 import StartPlanting from './start_planting/pages/landing';
 import ActualRainfall from './actual_rainfall/pages/landing';
 import NormalRainfall from './normal_rainfall/pages/landing';
+import LaNinaRainfall from './la_nina_rainfall/pages/landing';
+import ElNinoRainfall from './el_nino_rainfall/pages/landing';
+
 import { IState } from '../../ducks'
 
 const ConfigurationRoute = () => {
@@ -34,6 +37,8 @@ const ConfigurationRoute = () => {
             <Route exact path="/sagip/configuration/planting" component={StartPlanting}/>
             <Route exact path="/sagip/configuration/actualrainfall" component={ActualRainfall}/>
             <Route exact path="/sagip/configuration/normalrainfall" component={NormalRainfall}/>
+            <Route exact path="/sagip/configuration/el_nino_rainfall" component={ElNinoRainfall}/>
+            <Route exact path="/sagip/configuration/la_nina_rainfall" component={LaNinaRainfall}/>
         </Switch>
     )
 }

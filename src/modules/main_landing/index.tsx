@@ -14,7 +14,8 @@ import {
   SettingFilled,
   MessageFilled,
   WechatFilled,
-  ReconciliationFilled
+  ReconciliationFilled,
+  FundViewOutlined
 } from '@ant-design/icons';
 import Board from '../board';
 import UserMngt from '../user_mngt/route';
@@ -245,7 +246,16 @@ const iconstyle : React.CSSProperties | undefined ={
     marginRight : '20px'
 }
 
-const subs = ['livelihood','production_stage','planting','risk','seed','other','actualrainfall','normalrainfall'];
+const subs = [
+    'livelihood',
+    'production_stage',
+    'planting','risk',
+    'seed','other',
+    'actualrainfall',
+    'normalrainfall',
+    'el_nino_rainfall',
+    'la_nina_rainfall'
+];
 
 interface IMenu {
     id : string;
@@ -341,23 +351,44 @@ const MenuItem : IMenu[] = [
                 name : 'Other Pre-Production',
                 link:'/sagip/configuration/other',
             },
+        ]
+    },
+    {
+        id : '5',
+        key : "rainfall",
+        name : 'Rainfall',
+        link:'/sagip/configuration',
+        icon : <FundViewOutlined style={iconstyle}/> ,
+        permission : ['R1', 'LGU'],
+        subMenu : [
             {
-                id : '4-7',
+                id : '5-1',
                 key : "actualrainfall",
                 name : 'Actual Rainfall',
                 link:'/sagip/configuration/actualrainfall',
             },
             {
-                id : '4-8',
+                id : '5-2',
                 key : "normalrainfall",
                 name : 'Normal Rainfall',
                 link:'/sagip/configuration/normalrainfall',
+            },
+            {
+                id : '5-3',
+                key : "el_nino_rainfall",
+                name : 'El Niño Rainfall',
+                link:'/sagip/configuration/el_nino_rainfall',
+            },
+            {
+                id : '5-4',
+                key : "la_nina_rainfall",
+                name : 'La Niña Rainfall',
+                link:'/sagip/configuration/la_nina_rainfall',
             }
-
         ]
     },
     {
-        id : '5',
+        id : '6',
         key : "users",
         name : 'User Management',
         link:'/sagip/users',
