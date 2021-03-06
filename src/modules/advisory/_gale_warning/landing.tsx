@@ -75,7 +75,7 @@ const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_statu
             sms_output = `${sms_output} ${date}`
         }
         if(allFields.wind_speed){;
-            sms_output = `${sms_output} WindSpeed:${allFields.wind_speed} MPS/`
+            sms_output = `${sms_output} WindSpeed:${allFields.wind_speed} ms/`
         }
         if(allFields.description){;
             sms_output = `${sms_output} Desc:${allFields.description}/`
@@ -146,14 +146,14 @@ const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_statu
                     </Row>
                     <Row>
                         <Col span={4}>
-                            <ModalContainer.Label>Wind Speed (MPS) :</ModalContainer.Label>
+                            <ModalContainer.Label>Wind Speed (m/s) :</ModalContainer.Label>
                         </Col>
                         <Col span={16}>
                             <Form.Item
                                 name="wind_speed"
                                 rules={[{ required: true, message: 'Please input required fields!' }]}
                             >
-                               <InputNumber style={{width : '30%'}} />
+                               <InputNumber style={{width : '30%'}} maxLength={5} />
                             </Form.Item> 
                         </Col>
                     </Row>
@@ -256,30 +256,30 @@ const FlexDiv = styled.div`
     display : flex;
     justify-content : space-between;
 `
-const getGaleWarningScale = (mps : number) : [string, string] =>  {
-    if(mps <= 0){
+const getGaleWarningScale = (ms : number) : [string, string] =>  {
+    if(ms < 0.3){
         return ['Calm', 'Light Winds'];
-    }else if(mps >= 1 && mps <= 3){
+    }else if(ms >= 0.3 && ms <= 1.5){
         return ['Light Air', 'Light Winds'];
-    }else if(mps >= 4 && mps <= 7){
+    }else if(ms >= 1.6 && ms <= 3.3){
         return ['Light Breeze', 'Light Winds'];
-    }else if(mps >= 8 && mps <= 12){
+    }else if(ms >= 3.4 && ms <= 5.5){
         return ['Gentle Breeze', 'Light Winds'];
-    }else if(mps >= 13 && mps <= 18){
+    }else if(ms >= 5.6 && ms <= 7.9){
         return ['Moderate Breeze', 'Light Winds'];
-    }else if(mps >= 18 && mps <= 24){
+    }else if(ms >= 8.0 && ms <= 10.7){
         return ['Fresh Breeze', 'High Winds'];
-    }else if(mps >= 25 && mps <= 31){
+    }else if(ms >= 10.8 && ms <= 13.8){
         return ['Strong Breeze', 'High Winds'];
-    }else if(mps >= 32 && mps <= 38){
+    }else if(ms >= 13.9 && ms <= 17.1){
         return ['Near Gale', 'High Winds'];
-    }else if(mps >= 39 && mps <= 46){
+    }else if(ms >= 17.2 && ms <= 20.7){
         return ['Gale', 'Gale-Force'];
-    }else if(mps >= 47 && mps <= 54){
+    }else if(ms >= 20.8 && ms <= 24.4){
         return ['Strong Gale', 'Gale-Force'];
-    }else if(mps >= 55 && mps <= 63){
+    }else if(ms >= 24.5 && ms <= 28.4){
         return ['Storm', 'Storm-Force'];
-    }else if(mps >= 64 && mps <= 72){
+    }else if(ms >= 28.5 && ms <= 32.6){
         return ['Violent Storm', 'Storm-Force'];
     }else {
         return ['Hurricane Force', 'Hurricane-Force'];
