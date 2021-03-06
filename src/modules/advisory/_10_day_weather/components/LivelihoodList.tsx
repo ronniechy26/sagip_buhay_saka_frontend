@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Select, Input, Form } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components/macro';
@@ -8,6 +8,7 @@ import { ILivelihood } from '../../../../models/LivelihoodModel';
 import { IProductionStage } from '../../../../models/ProductionStageModel';
 import { IRisk } from '../../../../models/RiskModel';
 import { FormInstance } from 'antd/lib/form';
+import { find }  from 'lodash';
 
 interface IProps { 
     item : ILivelihoodList;
@@ -29,7 +30,36 @@ const LivelihoodList : React.FC<IProps> = ({
     risk_list = [],
     index
 }) => {
-    
+
+    const [selectedLivelihood, setSelectedLivelihood] = useState<number|null>(null);
+    const [ risk, setRisk] = useState<Array<IRisk>>([]);
+    const [ prod_stage, setProdStage] = useState<Array<IProductionStage>>([]);
+
+    useEffect(() => {
+        if(!selectedLivelihood) return;
+        const livelihood = find( 
+            livelihood_list , { 'id': selectedLivelihood.toString() }
+        );    
+
+        const risk = risk_list.filter(
+            x => livelihood?.risk?.includes(parseInt(x.id))
+        );
+        setRisk(risk);
+        
+        const prod_stage = production_stage_list.filter(
+            x => livelihood?.production_stage?.includes(parseInt(x.id))
+        );
+        setProdStage(prod_stage);
+       
+    }, [
+        selectedLivelihood,
+        livelihood_list,
+        production_stage_list,
+        risk_list,
+        setRisk,
+        setProdStage
+    ]);
+
     return (
         <div
             style={{ borderBottom : '1px solid #006064', marginTop : '10px'}}
@@ -45,7 +75,10 @@ const LivelihoodList : React.FC<IProps> = ({
                     <SelectStyled
                         style={{width : '200px'}}
                         value={item.livelihood}
-                        onChange={(val) => LivelihoodListChange(val, index, 'livelihood')}
+                        onChange={(val) => {
+                            setSelectedLivelihood(val as number);
+                            LivelihoodListChange(val, index, 'livelihood');
+                        }}
                     >
                         {livelihood_list.map((item) => {
                             return(
@@ -65,7 +98,7 @@ const LivelihoodList : React.FC<IProps> = ({
                   value={item.production_stage}
                   onChange={(val) => LivelihoodListChange(val, index, 'production_stage')}
                 >
-                    {production_stage_list.map((item) => {
+                    {prod_stage.map((item) => {
                         return(
                             <Select.Option value={item.id} key={item.id}>
                                 {item.production_stage_name}
@@ -82,7 +115,7 @@ const LivelihoodList : React.FC<IProps> = ({
                   value={item.risk}
                   onChange={(val) => LivelihoodListChange(val, index, 'risk')}
                 >
-                    {risk_list.map((item) => {
+                    {risk.map((item) => {
                         return(
                             <Select.Option value={item.id} key={item.id}>
                                 {item.risk_name}

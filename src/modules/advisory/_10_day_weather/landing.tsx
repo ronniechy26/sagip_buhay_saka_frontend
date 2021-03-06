@@ -119,7 +119,13 @@ const Landing : React.FC<IProps> = ({
 
     const LivelihoodListChange = React.useCallback((value, index, column) => {
         const cloneLivelihood = cloneDeep(livelihoodList);
-        cloneLivelihood[index][column] = value;
+        if(column === 'livelihood'){
+            cloneLivelihood[index][column] = value;
+            cloneLivelihood[index]['risk'] = "";
+            cloneLivelihood[index]['production_stage'] = "";
+        }else{
+            cloneLivelihood[index][column] = value;
+        }
         setLivelihoodList(cloneLivelihood);
     }, [livelihoodList, setLivelihoodList])
 

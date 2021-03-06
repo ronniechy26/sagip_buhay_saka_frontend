@@ -316,12 +316,6 @@ const MenuItem : IMenu[] = [
         permission : ['R1', 'LGU'],
         subMenu : [
             {
-                id : '4-1',
-                key : "livelihood",
-                name : 'Livelihood',
-                link:'/sagip/configuration/livelihood',
-            },
-            {
                 id : '4-2',
                 key : "production_stage",
                 name : 'Production Stage',
@@ -332,6 +326,12 @@ const MenuItem : IMenu[] = [
                 key : "risk",
                 name : 'Risk',
                 link:'/sagip/configuration/risk',
+            },
+            {
+                id : '4-1',
+                key : "livelihood",
+                name : 'Livelihood',
+                link:'/sagip/configuration/livelihood',
             },
             {
                 id : '4-4',

@@ -9,6 +9,8 @@ export const LivelihoodSchema = yup.object({
     created_by: yup.string().nullable().notRequired(),
     created_by_last_name: yup.string().nullable().notRequired(),
     created_by_first_name: yup.string().nullable().notRequired(),
+    production_stage : yup.array().of(yup.number()).nullable(),
+    risk : yup.array().of(yup.number()).nullable()
 }).defined();
 
 export const LivelihoodSchemaListPayloadSchema = yup.object({
