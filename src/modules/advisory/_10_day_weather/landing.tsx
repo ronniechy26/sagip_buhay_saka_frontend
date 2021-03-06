@@ -74,7 +74,7 @@ const Landing : React.FC<IProps> = ({
     const [ form ] = Form.useForm();
     const [ forecastDate, setForecastDate ] = useState();
     const [ dates, setDates ] = useState<IDates[]>([]);
-    const [ potentialHazzard, setPotentialHazzard ] = useState('');
+    // const [ potentialHazzard, setPotentialHazzard ] = useState('');
     const [ livelihoodList, setLivelihoodList ] = useState<Array<ILivelihoodList>>([init]);
     const [ smsOutput, setSmsOutput ] = useState('');
     const add_loading = (advisory_status['ADVISORIES_ADD_10DAY'] ? advisory_status['ADVISORIES_ADD_10DAY'].fetching : false);
@@ -141,11 +141,11 @@ const Landing : React.FC<IProps> = ({
         setLivelihoodList(filteredList)
     }, [setLivelihoodList, livelihoodList])
     
-    const render_sms = React.useCallback( (startdate : moment.Moment | undefined, livelihoodList : ILivelihoodList[] , potentialHazzard : string) =>{
+    const render_sms = React.useCallback( (startdate : moment.Moment | undefined, livelihoodList : ILivelihoodList[] ) =>{  // potentialHazzard : string
         if(startdate === undefined) return '';
         let sms_output = `${user_log?.first_name} ${user_log?.last_name}`;
-        sms_output = `${sms_output} ${startdate.format('MMM DD')}-${moment(startdate).add(6, 'days').format('DD,YYYY')}`
-        sms_output = `${sms_output} Potential Hazzard:${potentialHazzard}/`
+        sms_output = `${sms_output} ${startdate.format('MMM DD')}-${moment(startdate).add(6, 'days').format('DD,YYYY')}/`
+        // sms_output = `${sms_output} Potential Hazzard:${potentialHazzard}/`
         const finalSmsOutput = livelihoodList.reduce((acc, curr) => {
             let temp = `Livelihood:${getValueInList(curr.livelihood, livelihood_list, 'livelihood_name')}/`
             if(curr.production_stage !== ''){
@@ -163,9 +163,9 @@ const Landing : React.FC<IProps> = ({
     }, [livelihood_list, production_stage_list, risk_list, user_log ])
 
     useEffect(() => {
-        const output = render_sms(forecastDate, livelihoodList , potentialHazzard);
+        const output = render_sms(forecastDate, livelihoodList ); // potentialHazzard
         setSmsOutput(output);
-    }, [forecastDate, livelihoodList, potentialHazzard, setSmsOutput, render_sms]);
+    }, [forecastDate, livelihoodList, setSmsOutput, render_sms]); //potentialHazzard
 
     useEffect(() => {
         if (flag && advisory_status['ADVISORIES_ADD_10DAY'] ) {
@@ -244,7 +244,7 @@ const Landing : React.FC<IProps> = ({
                                 onChange={InputTableChange}
                             />
                         </Table>
-                        <div className="row-margin-top2" >
+                        {/* <div className="row-margin-top2" >
                             <span className="display-inline-block" style={{margin : '10px 50px 0 0'}}>
                                 <ModalContainer.Label>Potential Hazzard:</ModalContainer.Label>
                             </span>
@@ -261,7 +261,7 @@ const Landing : React.FC<IProps> = ({
                                     />
                                 </Form.Item> 
                             </span>
-                        </div>
+                        </div> */}
                         <div className="row-margin-top2">
                             {
                                 livelihoodList.map((item, index) =>{
