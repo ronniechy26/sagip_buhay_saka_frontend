@@ -15,6 +15,7 @@ import NormalRainfallReducer from '../ducks/NormalRainfallDucks';
 import FeedbackReducer from '../ducks/FeedbackDucks';
 import LaNinaRainfallReducer from '../ducks/LaNinaRainfallDucks';
 import ElNinoRainfallReducer from '../ducks/ElNinoRainfallDucks';
+import DashboardReducer from '../ducks/DashboardDucks';
 
 export interface IStatus {
     error: any;
@@ -54,7 +55,8 @@ export const reducersList = {
     NormalRainfallReducer,
     FeedbackReducer,
     LaNinaRainfallReducer,
-    ElNinoRainfallReducer
+    ElNinoRainfallReducer,
+    DashboardReducer
 };
 export type IReducer = {
     [key in keyof typeof reducersList]: typeof reducersList[keyof typeof reducersList];
