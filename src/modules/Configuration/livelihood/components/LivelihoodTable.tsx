@@ -36,6 +36,7 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
     const [ currentPage, setCurrentPage ] = useState(1);
 
     useEffect(() => {
+        if(props.list === undefined) return;
         const newData = props.list.map((item) => {
             return {
                 ...item,

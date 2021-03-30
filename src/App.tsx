@@ -25,5 +25,5 @@ const App : React.FC = () =>{
 export default App;
 
 const VersionPage = () =>{
-  return <p>sagip version 1.1</p>
+  return <p>sagip version 1.2</p>
 }
