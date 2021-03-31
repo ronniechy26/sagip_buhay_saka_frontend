@@ -1,10 +1,6 @@
 import React from 'react';
 import { Input, Form, Select } from 'antd';
 import styled from 'styled-components';
-import { IRisk } from '../../../../models/RiskModel';
-import { IProductionStage } from '../../../../models/ProductionStageModel';
-
-const Option = Select.Option;
 
 export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     editing: boolean;
@@ -15,8 +11,6 @@ export interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     children: React.ReactNode;
     nodeRef : React.MutableRefObject<Input>;
     inputType : number;
-    list_risk : Array<IRisk>;
-    list_prod_stage : Array<IProductionStage>;
 }
 
 export const EditableCell: React.FC<EditableCellProps> = ({
@@ -28,8 +22,6 @@ export const EditableCell: React.FC<EditableCellProps> = ({
     children,
     nodeRef,
     inputType,
-    list_risk,
-    list_prod_stage,
     ...restProps
   }) => {
  
@@ -45,7 +37,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
               },
             ]}
           >
-            { return_input(record, inputType, nodeRef, list_risk, list_prod_stage )}
+            { return_input(record, inputType, nodeRef )}
           </Form.Item>
         ) : (
           children
@@ -67,36 +59,12 @@ export const isEditing = (record: any, key : any) => {
   return record.id === key;
 };
 
-const return_input = (record, code, nodeRef, list_risk, list_prod_stage) => {
+const return_input = (record, code, nodeRef) => {
     switch (code) {
         case 0:
-        return  (
-                  <Select 
-                    mode="tags"
-                  >
-                  {list_risk.map((item : IRisk) =>{
-                      return(
-                          <Option key={parseInt(item.id)} value={parseInt(item.id)}>
-                              {item.risk_name}
-                          </Option>
-                      )
-                  })}
-                  </Select> 
-                )
+            return  ( <Select  mode="tags"> </Select> )
         case 1:
-            return  (
-                      <Select 
-                        mode="tags"
-                      >
-                        {list_prod_stage.map((item : IProductionStage) =>{
-                            return(
-                              <Option key={parseInt(item.id)} value={parseInt(item.id)}>
-                                  {item.production_stage_name}
-                              </Option>
-                            )
-                        })}
-                      </Select> 
-                    )
+            return  ( <Select  mode="tags"></Select>  )
         case 2:
             return  <Input style={{width : '100%'}}  ref={nodeRef}/>
         default:

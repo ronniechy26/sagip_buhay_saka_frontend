@@ -5,8 +5,6 @@ import styled from 'styled-components/macro';
 import {  ModalContainer } from '../../../../components';
 import { ILivelihoodList } from '../landing';
 import { ILivelihood } from '../../../../models/LivelihoodModel';
-import { IProductionStage } from '../../../../models/ProductionStageModel';
-import { IRisk } from '../../../../models/RiskModel';
 import { FormInstance } from 'antd/lib/form';
 import { find }  from 'lodash';
 
@@ -14,8 +12,6 @@ interface IProps {
     item : ILivelihoodList;
     removeLivelihood : (id : number) => void;
     livelihood_list: Array<ILivelihood>;
-    production_stage_list : Array<IProductionStage>;
-    risk_list : IRisk[];
     LivelihoodListChange : (value, index, column) => void;
     index : number;
     form? : FormInstance<any>
@@ -26,14 +22,13 @@ const LivelihoodList : React.FC<IProps> = ({
     LivelihoodListChange,
     item,
     livelihood_list = [],
-    production_stage_list = [],
-    risk_list = [],
     index
 }) => {
 
     const [selectedLivelihood, setSelectedLivelihood] = useState<number|null>(null);
-    const [ risk, setRisk] = useState<Array<IRisk>>([]);
-    const [ prod_stage, setProdStage] = useState<Array<IProductionStage>>([]);
+    const [ risk, setRisk] = useState<any>([]);
+    const [ prod_stage, setProdStage] = useState<any>([]);
+    const [ advice, setAdvice] = useState<any>([]);
 
     useEffect(() => {
         if(!selectedLivelihood) return;
@@ -41,23 +36,14 @@ const LivelihoodList : React.FC<IProps> = ({
             livelihood_list , { 'id': selectedLivelihood.toString() }
         );    
 
-        const risk = risk_list.filter(
-            x => livelihood?.risk?.includes(parseInt(x.id))
-        );
-        setRisk(risk);
-        
-        const prod_stage = production_stage_list.filter(
-            x => livelihood?.production_stage?.includes(parseInt(x.id))
-        );
-        setProdStage(prod_stage);
+        if(!livelihood) return;
+        setRisk(livelihood?.risk);
+        setProdStage(livelihood?.production_stage);
+        setAdvice(livelihood?.advice);
        
     }, [
         selectedLivelihood,
         livelihood_list,
-        production_stage_list,
-        risk_list,
-        setRisk,
-        setProdStage
     ]);
 
     return (
@@ -69,7 +55,7 @@ const LivelihoodList : React.FC<IProps> = ({
             </SpanStyle>
             <SpanStyle>
                 <Form.Item
-                    name={`list[${index}].livelihood`}
+                    name={`list[${item.id}].livelihood`}
                     rules={[{ required: true, message: 'Please input required fields!' }]}
                 >
                     <SelectStyled
@@ -98,10 +84,10 @@ const LivelihoodList : React.FC<IProps> = ({
                   value={item.production_stage}
                   onChange={(val) => LivelihoodListChange(val, index, 'production_stage')}
                 >
-                    {prod_stage.map((item) => {
+                    {prod_stage.map((item, index) => {
                         return(
-                            <Select.Option value={item.id} key={item.id}>
-                                {item.production_stage_name}
+                            <Select.Option value={item} key={index}>
+                                {item}
                             </Select.Option>
                         )
                     })}
@@ -115,36 +101,38 @@ const LivelihoodList : React.FC<IProps> = ({
                   value={item.risk}
                   onChange={(val) => LivelihoodListChange(val, index, 'risk')}
                 >
-                    {risk.map((item) => {
+                    {risk.map((item, index) => {
                         return(
-                            <Select.Option value={item.id} key={item.id}>
-                                {item.risk_name}
+                            <Select.Option value={item} key={index}>
+                                {item}
                             </Select.Option>
                         )
                     })}
                 </SelectStyled>
             </SpanStyle>
+
             <IconStyleSpan>
                 <CloseOutlined onClick={() => removeLivelihood(item.id)}/>
             </IconStyleSpan>
-            <div className="row-margin-top row-margin-bottom2" >
-                <span className="display-inline-block" style={{margin : '10px 50px 0 0'}}>
-                    <ModalContainer.Label>Advisory:</ModalContainer.Label>
-                </span>
-                <span>
-                    <Form.Item
-                        style={{display : 'inline-block', width : '40%', marginTop : '10px' }}
-                        name={`list[${index}].advisory`}
-                        rules={[{ required: true, message: 'Please input required fields!' }]}
+
+            <SpanStyle>
+                <ModalContainer.Label>Advisory :</ModalContainer.Label>
+            </SpanStyle>
+            <SpanStyle>
+                <SelectStyled
+                    value={item.advisory}
+                    onChange={(val) => LivelihoodListChange(val, index, 'advisory')}
                     >
-                        <Input.TextArea 
-                            rows={1} 
-                            value={item.advisory}
-                            onChange={(e) => LivelihoodListChange(e.target.value, index, 'advisory')}
-                        /> 
-                    </Form.Item>   
-                </span>
-            </div>
+                        {advice.map((item, index) => {
+                            return(
+                                <Select.Option value={item} key={index}>
+                                    {item}
+                                </Select.Option>
+                            )
+                        })}
+                </SelectStyled>
+            </SpanStyle>
+            <div className="row-margin-bottom2"></div>
         </div>
     )
 }

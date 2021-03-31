@@ -30,8 +30,8 @@ const ConfigurationRoute = () => {
     return (
         <Switch>
             <Route exact path="/sagip/configuration/livelihood" component={Livelihood}/>
-            <Route exact path="/sagip/configuration/risk" component={Risk}/>
-            <Route exact path="/sagip/configuration/production_stage" component={ProductionStage}/>
+            {/* <Route exact path="/sagip/configuration/risk" component={Risk}/>
+            <Route exact path="/sagip/configuration/production_stage" component={ProductionStage}/> */}
             <Route exact path="/sagip/configuration/seed" component={Seed}/>
             <Route exact path="/sagip/configuration/other" component={PreProduction}/>
             <Route exact path="/sagip/configuration/planting" component={StartPlanting}/>

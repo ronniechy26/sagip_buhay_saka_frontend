@@ -3,20 +3,15 @@ import { Table, Switch, Form, notification} from 'antd';
 import { ILivelihood } from '../../../../models/LivelihoodModel';
 import { EditOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import  moment from 'moment';
-import { find } from 'lodash';
 import { StatusFilter } from '../../../../constants';
 import useTableSearch from '../../../../hooks/useTableSearch';
 import useTableFilterDate from '../../../../hooks/useTableFilterDate';
 import useFocus from '../../../../hooks/useFocus';
 import { Switch as SwitchWrapper, ActionButton } from '../../../../components/index'
 import { EditableCell, isAdding, remove_row, isEditing } from '../components/LivelihoodEditableCells';
-import { IRisk } from '../../../../models/RiskModel';
-import { IProductionStage } from '../../../../models/ProductionStageModel';
 
 interface IProps {
     list : Array<ILivelihood>;
-    list_risk : Array<IRisk>;
-    list_prod_stage : Array<IProductionStage>;
     loading : boolean;
     add_livelihood : (data : ILivelihood) => void;
     update_livelihood : (data : ILivelihood, id : string) => void;
@@ -41,7 +36,8 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
             return {
                 ...item,
                 risk : item.risk ?? [],
-                production_stage : item.production_stage ?? []
+                production_stage : item.production_stage ?? [],
+                advice : item.advice ?? []
             }
         });
         setData(newData)
@@ -148,34 +144,16 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
         return adding ? ( <span></span> ) : ( <>{val ? moment(val).format('YYYY-MM-DD h:mm:ss') : '-'}</>) 
     }
 
-    const render_tags = (val, rowData, type) =>{
+    const render_tags = (val, rowData) =>{
         if( isAdding(rowData) || val === null ) return <span></span>;
    
-        // convert to string for comparison since "id" is string in array
-        if(type === "risk"){
-            return val.map((id : number) =>{
-                const risk = find( 
-                    props.list_risk , { 'id': id.toString() }
-                ); 
-                return risk && (
-                    <div key={id} className="tags-for-table" >
-                        {risk.risk_name}
-                    </div>
-                )
-            });
-        }else{
-            return val.map((id : number) =>{
-                const prod_stage = find( 
-                    props.list_prod_stage , { 'id': id.toString() }
-                ); 
-                return prod_stage && (
-                    <div key={id} className="tags-for-table" >
-                        {prod_stage.production_stage_name}
-                    </div>
-                )
-            });
-        }
-    
+        return val.map((item : string, index : number) =>{
+           return( 
+                <div key={index} className="tags-for-table" >
+                    {item}
+                </div>
+            )
+        });
     }
     
     const render_edit_status = (val, record) => {
@@ -208,7 +186,7 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
             editable: true,
             ellipsis: true,
             key: 'production_stage',
-            render: (val : any, rowData : any) => render_tags(val, rowData, "production_stage"),
+            render: (val : any, rowData : any) => render_tags(val, rowData),
         },
         {
             title: 'Risk',
@@ -216,7 +194,15 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
             editable: true,
             ellipsis: true,
             key: 'risk',
-            render: (val : any, rowData : any) => render_tags(val, rowData, "risk"),
+            render: (val : any, rowData : any) => render_tags(val, rowData),
+        },
+        {
+            title: 'Advice',
+            dataIndex: 'advice',
+            editable: true,
+            ellipsis: true,
+            key: 'advice',
+            render: (val : any, rowData : any) => render_tags(val, rowData),
         },
         {
             title: 'Created',
@@ -257,8 +243,6 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
             title: column.title,
             editing: isEditing(record, editingKey),
             nodeRef,
-            list_prod_stage : props.list_prod_stage,
-            list_risk : props.list_risk,
             inputType : checkInputType(column.dataIndex)
           }),
         };
@@ -302,8 +286,10 @@ const checkInputType = (dataIndex) => {
         case 'livelihood_name':
             return 2;
         case 'production_stage':
-            return 1;
+            return 0;
         case 'risk':
+            return 0;
+        case 'advice':
             return 0;
         default:
             return -1;

@@ -9,10 +9,6 @@ import { ILivelihood } from '../../../../models/LivelihoodModel';
 import { IState } from '../../../../ducks';
 import { asyncActions } from '../../../../ducks/LivelihoodDucks';
 import { getLivelihoodStatus } from '../../../../selectors/LivelihoodSelector'; 
-import { asyncActions as riskAsyncActions } from '../../../../ducks/RiskDucks';
-import { asyncActions as prodStageAsyncActions } from '../../../../ducks/ProductionStageDucks';
-import { IProductionStage } from '../../../../models/ProductionStageModel';
-import { IRisk } from '../../../../models/RiskModel';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -23,11 +19,7 @@ const Landing : React.FC<IProps> = ({
     update_livelihood,
     deactivate_livelihood,
     activate_livelihood,
-    fetch_risks,
-    fetch_production_stage,
     list, 
-    list_prod_stage,
-    list_risk,
     status, 
     data
 }) => {
@@ -36,12 +28,8 @@ const Landing : React.FC<IProps> = ({
 
     useEffect(() =>{
         fetch_livelihoods();
-        fetch_risks();
-        fetch_production_stage();
     }, [
             fetch_livelihoods, 
-            fetch_risks,
-            fetch_production_stage,
             data
         ]
     )
@@ -72,8 +60,6 @@ const Landing : React.FC<IProps> = ({
                     <Table>
                         <LivelihoodTable
                             list={list as Array<ILivelihood>}
-                            list_prod_stage = {  list_prod_stage as Array<IProductionStage>}
-                            list_risk = { list_risk as Array<IRisk> }
                             ref={childRef}
                             loading={fetch_loading}
                             add_livelihood={add_livelihood}
@@ -93,8 +79,6 @@ const mapStateToProps = (state: IState) => ({
     list : state.LivelihoodReducer.list,
     status : getLivelihoodStatus(state),
     data : state.LivelihoodReducer.data,
-    list_prod_stage : state.ProductionStageReducer.list,
-    list_risk : state.RiskReducer.list
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
@@ -105,8 +89,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
             update_livelihood : asyncActions.update_livelihood,
             deactivate_livelihood : asyncActions.deactivate_livelihood,
             activate_livelihood : asyncActions.activate_livelihood,
-            fetch_risks : riskAsyncActions.fetch_risks,
-            fetch_production_stage : prodStageAsyncActions.fetch_production_stage
         },
         dispatch
     );

@@ -62,10 +62,6 @@ type IProps = ReturnType<typeof mapStateToProps> &
 const Landing : React.FC<IProps> = ({
     livelihood_list,
     fetch_livelihoods,
-    fetch_production_stages,
-    production_stage_list,
-    fetch_risks,
-    risk_list,
     user_log,
     add_10_day,
     advisory_status
@@ -84,10 +80,8 @@ const Landing : React.FC<IProps> = ({
     
     useEffect(() => {
         fetch_livelihoods();
-        fetch_production_stages();
-        fetch_risks();
-    }, [fetch_livelihoods, fetch_production_stages, fetch_risks])
-
+    }, [fetch_livelihoods])
+ 
     const dateOnChange = (date, dateString : string)  => {
         if(dateString === '') {
             setForecastDate(undefined);
@@ -110,7 +104,7 @@ const Landing : React.FC<IProps> = ({
         });
         setDates(arrayOfDates);
     }
-
+ 
     const InputTableChange = React.useCallback((value, index, column) => {
         const cloneDates = cloneDeep(dates);
         cloneDates[index][column] = value;
@@ -123,6 +117,7 @@ const Landing : React.FC<IProps> = ({
             cloneLivelihood[index][column] = value;
             cloneLivelihood[index]['risk'] = "";
             cloneLivelihood[index]['production_stage'] = "";
+            cloneLivelihood[index]['advisory'] = "";
         }else{
             cloneLivelihood[index][column] = value;
         }
@@ -155,18 +150,20 @@ const Landing : React.FC<IProps> = ({
         const finalSmsOutput = livelihoodList.reduce((acc, curr) => {
             let temp = `Livelihood:${getValueInList(curr.livelihood, livelihood_list, 'livelihood_name')}/`
             if(curr.production_stage !== ''){
-                temp = temp +  `Prod Stage:${getValueInList(curr.production_stage, production_stage_list, 'production_stage_name')}/`
+                temp = temp +  `Prod Stage:${curr.production_stage}/`;
             }
             if(curr.risk !== ''){
-                temp = temp +  `Risk:${getValueInList(curr.risk, risk_list, 'risk_name')}/`
+                temp = temp +  `Risk:${curr.risk}/`;
             }
-            temp = temp + `Advisory:${curr.advisory}`
+            if(curr.advisory !== ''){
+                temp = temp + `Advisory:${curr.advisory}/`
+            }
             return `${acc}${temp}`;
         }, sms_output)
 
         return finalSmsOutput;
         
-    }, [livelihood_list, production_stage_list, risk_list, user_log ])
+    }, [livelihood_list, user_log ])
 
     useEffect(() => {
         const output = render_sms(forecastDate, livelihoodList ); // potentialHazzard
@@ -277,8 +274,6 @@ const Landing : React.FC<IProps> = ({
                                             key={index} 
                                             index={index}
                                             livelihood_list={livelihood_list as Array<ILivelihood>}
-                                            production_stage_list={production_stage_list as Array<IProductionStage>}
-                                            risk_list={risk_list as IRisk[]}
                                             item={item}
                                             removeLivelihood={removeLivelihood}
                                             LivelihoodListChange={LivelihoodListChange}
@@ -334,8 +329,6 @@ const Landing : React.FC<IProps> = ({
 
 const mapStateToProps = (state: IState) => ({
     livelihood_list : getLivelihoodActiveStatus(state),
-    production_stage_list : getProductionStageActiveStatus(state),
-    risk_list : getRiskActiveStatus(state),
     user_log : state.UserReducer.data,
     advisory_status : getAdvisoryStatus(state)
 });
@@ -344,8 +337,6 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
     bindActionCreators(
         {
             fetch_livelihoods: LAsyncAction.fetch_livelihoods,
-            fetch_production_stages : PAsyncAction.fetch_production_stage,
-            fetch_risks : RAsyncAction.fetch_risks,
             add_10_day : AdvisoryAction.add_10_day
         },
         dispatch

@@ -248,8 +248,9 @@ const iconstyle : React.CSSProperties | undefined ={
 
 const subs = [
     'livelihood',
-    'production_stage',
-    'planting','risk',
+    // 'production_stage',
+    // 'risk',
+    'planting',
     'seed','other',
     'actualrainfall',
     'normalrainfall',
@@ -315,18 +316,18 @@ const MenuItem : IMenu[] = [
         icon : <SettingFilled style={iconstyle}/>,
         permission : ['R1', 'LGU'],
         subMenu : [
-            {
-                id : '4-2',
-                key : "production_stage",
-                name : 'Production Stage',
-                link:'/sagip/configuration/production_stage',
-            },
-            {
-                id : '4-3',
-                key : "risk",
-                name : 'Risk',
-                link:'/sagip/configuration/risk',
-            },
+            // {
+            //     id : '4-2',
+            //     key : "production_stage",
+            //     name : 'Production Stage',
+            //     link:'/sagip/configuration/production_stage',
+            // },
+            // {
+            //     id : '4-3',
+            //     key : "risk",
+            //     name : 'Risk',
+            //     link:'/sagip/configuration/risk',
+            // },
             {
                 id : '4-1',
                 key : "livelihood",
