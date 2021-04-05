@@ -35,7 +35,7 @@ const Landing : React.FC<IProps> = ({
             <Container>
                 <Container.Card>
                     <Container.Header>
-                        <Container.Title>Configuration -  Pre Production</Container.Title>
+                        <Container.Title>Configuration -  Other Advise</Container.Title>
                     </Container.Header>
                     <Table.Header>
                         <Table.Title>
@@ -49,7 +49,7 @@ const Landing : React.FC<IProps> = ({
                                 icon={<PlusOutlined />}
                                 onClick={() => { childRef.current.addNewPreProduction() }}
                             >
-                                Add Pre-Production
+                                Add Other Advise
                             </Button>
                         </Table.ButtonWrapper>
                     </Table.Header>

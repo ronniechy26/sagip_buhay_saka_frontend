@@ -17,3 +17,4 @@ export { default as LandingHeader } from './LandingHeader';
 export { default as Pane } from './Pane';
 export { default as BadgeWrapper } from './Badge';
 export { default as InfoSection } from './InfoSection';
+export { default as Tags } from './Tags'

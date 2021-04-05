@@ -35,33 +35,6 @@ const FeedbackTable : React.FC<IProps> = ({list, loading}) => {
                 (props) => <>{(props.val)}</>
             ),
         },
-        {
-            title: 'Type of Feedback',
-            dataIndex: 'type_of_feedback',
-            key: 'type_of_feedback',
-            ...getColumnSearch(
-                ['type_of_feedback'], 
-                (props) => <>{(<CustomTag>{props.val}</CustomTag>)}</>
-            ),
-        },
-        {
-            title: 'Region',
-            dataIndex: 'province',
-            key: 'province',
-            ...getColumnSearch(
-                ['province'], 
-                (props) => <>{(props.val)}</>
-            ),
-        },
-        {
-            title: 'Province',
-            dataIndex: 'municipality',
-            key: 'municipality',
-            ...getColumnSearch(
-                ['municipality'], 
-                (props) => <>{(props.val)}</>
-            ),
-        },
     ];
 
 

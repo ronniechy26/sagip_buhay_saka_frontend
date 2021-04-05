@@ -35,7 +35,7 @@ const Landing : React.FC<IProps> = ({
             <Container>
                 <Container.Card>
                     <Container.Header>
-                        <Container.Title>Configuration - Seed</Container.Title>
+                        <Container.Title>Configuration - Best Seed to Use</Container.Title>
                     </Container.Header>
                     <Table.Header>
                         <Table.Title>

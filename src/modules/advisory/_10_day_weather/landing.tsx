@@ -44,16 +44,20 @@ export interface ILivelihoodList {
     id : number;
     livelihood : string;
     production_stage : string;
+    hazard : string;
     risk : string;
     advisory : string;
+    other_advisory : string;
 }
 
 const init : ILivelihoodList = {
     id : 0,
     livelihood : "",
     production_stage : "",
+    hazard : "",
     risk : "",
     advisory : "",
+    other_advisory : "",
 }
 
 type IProps = ReturnType<typeof mapStateToProps> &
@@ -117,7 +121,9 @@ const Landing : React.FC<IProps> = ({
             cloneLivelihood[index][column] = value;
             cloneLivelihood[index]['risk'] = "";
             cloneLivelihood[index]['production_stage'] = "";
+            cloneLivelihood[index]['hazard'] = "";
             cloneLivelihood[index]['advisory'] = "";
+            cloneLivelihood[index]['other_advisory'] = "";
         }else{
             cloneLivelihood[index][column] = value;
         }
@@ -129,8 +135,10 @@ const Landing : React.FC<IProps> = ({
         const newList = [...livelihoodList, {
             livelihood : "",
             production_stage : "",
+            hazard : "",
             risk : "",
             advisory : "",
+            other_advisory : "",
             id : lastIndexObj.id + 1
         }];
         setLivelihoodList(newList)
@@ -152,12 +160,16 @@ const Landing : React.FC<IProps> = ({
             if(curr.production_stage !== ''){
                 temp = temp +  `Prod Stage:${curr.production_stage}/`;
             }
+            if(curr.hazard !== ''){
+                temp = temp +  `Hazard:${curr.hazard}/`;
+            }
             if(curr.risk !== ''){
                 temp = temp +  `Risk:${curr.risk}/`;
             }
             if(curr.advisory !== ''){
                 temp = temp + `Advisory:${curr.advisory}/`
             }
+            temp = temp + `Other Advisory:${curr.other_advisory}/`
             return `${acc}${temp}`;
         }, sms_output)
 

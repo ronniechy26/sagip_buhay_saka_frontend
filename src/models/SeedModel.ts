@@ -3,6 +3,7 @@ import * as yup from 'yup';
 export const SeedSchema = yup.object({
     id : yup.string(),
     seed_name: yup.string().required(),
+    variety: yup.string().nullable().notRequired(),
     is_active: yup.boolean(),
     created_at: yup.string().nullable().notRequired(),
     updated_at: yup.string().nullable().notRequired(),

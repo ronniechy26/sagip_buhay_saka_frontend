@@ -28,6 +28,7 @@ const LivelihoodList : React.FC<IProps> = ({
     const [selectedLivelihood, setSelectedLivelihood] = useState<number|null>(null);
     const [ risk, setRisk] = useState<any>([]);
     const [ prod_stage, setProdStage] = useState<any>([]);
+    const [ hazard, setHazard] = useState<any>([]);
     const [ advice, setAdvice] = useState<any>([]);
 
     useEffect(() => {
@@ -37,9 +38,10 @@ const LivelihoodList : React.FC<IProps> = ({
         );    
 
         if(!livelihood) return;
-        setRisk(livelihood?.risk);
-        setProdStage(livelihood?.production_stage);
-        setAdvice(livelihood?.advice);
+        setRisk(livelihood?.risk ?? []);
+        setProdStage(livelihood?.production_stage ?? []);
+        setHazard(livelihood?.hazard ?? []);
+        setAdvice(livelihood?.advice ?? []) ;
        
     }, [
         selectedLivelihood,
@@ -94,6 +96,24 @@ const LivelihoodList : React.FC<IProps> = ({
                 </SelectStyled>
             </SpanStyle>
             <SpanStyle>
+                <ModalContainer.Label>Hazard:</ModalContainer.Label>
+            </SpanStyle>
+            <SpanStyle>
+                <SelectStyled
+                  value={item.hazard}
+                  onChange={(val) => LivelihoodListChange(val, index, 'hazard')}
+                >
+                    {hazard.map((item, index) => {
+                        return(
+                            <Select.Option value={item} key={index}>
+                                {item}
+                            </Select.Option>
+                        )
+                    })}
+                </SelectStyled>
+            </SpanStyle>
+            <div>
+            <SpanStyle>
                 <ModalContainer.Label>Risk :</ModalContainer.Label>
             </SpanStyle>
             <SpanStyle>
@@ -110,11 +130,7 @@ const LivelihoodList : React.FC<IProps> = ({
                     })}
                 </SelectStyled>
             </SpanStyle>
-
-            <IconStyleSpan>
-                <CloseOutlined onClick={() => removeLivelihood(item.id)}/>
-            </IconStyleSpan>
-
+            
             <SpanStyle>
                 <ModalContainer.Label>Advisory :</ModalContainer.Label>
             </SpanStyle>
@@ -132,6 +148,33 @@ const LivelihoodList : React.FC<IProps> = ({
                         })}
                 </SelectStyled>
             </SpanStyle>
+            
+            <div className="row-margin-top row-margin-bottom2" >
+            <SpanStyle>
+                    <ModalContainer.Label>Other Advisory :</ModalContainer.Label>
+            </SpanStyle>
+            
+            <SpanStyle>
+                    <Form.Item
+                        style={{display : 'inline-block', width : '300%'}}
+                        name={`list[${index}].advisory`}
+                        rules={[{ required: true, message: 'Please input required fields!' }]}
+                        >
+                        <Input.TextArea 
+                            rows={1} 
+                            value={item.advisory}
+                            onChange={(e) => LivelihoodListChange(e.target.value, index, 'other_advisory')}
+                        /> 
+                    </Form.Item>   
+                </SpanStyle>
+           
+            <SpanStyle2>
+                    <IconStyleSpan>
+                        <CloseOutlined onClick={() => removeLivelihood(item.id)}/>
+                    </IconStyleSpan>
+                </SpanStyle2>
+            </div>
+            </div>
             <div className="row-margin-bottom2"></div>
         </div>
     )
@@ -142,6 +185,11 @@ export default LivelihoodList
 const SpanStyle = styled.span`
     display: inline-block;
     margin-right : 20px;
+`
+const SpanStyle2 = styled.span`
+    display: inline-block;
+    margin-right : 20px;
+    margin-left : 430px;
 `
 
 const SelectStyled = styled(Select)`

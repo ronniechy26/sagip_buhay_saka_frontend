@@ -334,22 +334,22 @@ const MenuItem : IMenu[] = [
                 name : 'Livelihood',
                 link:'/sagip/configuration/livelihood',
             },
-            {
-                id : '4-4',
-                key : "planting",
-                name : 'Start Planting',
-                link:'/sagip/configuration/planting',
-            },
+            // {
+            //     id : '4-4',
+            //     key : "planting",
+            //     name : 'Start Planting',
+            //     link:'/sagip/configuration/planting',
+            // },
             {
                 id : '4-5',
                 key : "seed",
-                name : 'Seeds',
+                name : 'Best Seed to Use',
                 link:'/sagip/configuration/seed',
             },
             {
                 id : '4-6',
                 key : "other",
-                name : 'Other Pre-Production',
+                name : 'Other Advise',
                 link:'/sagip/configuration/other',
             },
         ]

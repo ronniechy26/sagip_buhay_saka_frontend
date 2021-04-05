@@ -34,7 +34,7 @@ const ConfigurationRoute = () => {
             <Route exact path="/sagip/configuration/production_stage" component={ProductionStage}/> */}
             <Route exact path="/sagip/configuration/seed" component={Seed}/>
             <Route exact path="/sagip/configuration/other" component={PreProduction}/>
-            <Route exact path="/sagip/configuration/planting" component={StartPlanting}/>
+            {/* <Route exact path="/sagip/configuration/planting" component={StartPlanting}/> */}
             <Route exact path="/sagip/configuration/actualrainfall" component={ActualRainfall}/>
             <Route exact path="/sagip/configuration/normalrainfall" component={NormalRainfall}/>
             <Route exact path="/sagip/configuration/el_nino_rainfall" component={ElNinoRainfall}/>

@@ -47,6 +47,7 @@ const SeedTable = React.forwardRef((props : IProps, ref) => {
             let temp = [...data];
             temp.splice( currentPage * 10 - 10, 0, {
                 is_active: true,
+                variety: "",
                 seed_name: "",
                 id: 'new'
             })
@@ -154,6 +155,16 @@ const SeedTable = React.forwardRef((props : IProps, ref) => {
             key: 'seed_name',
             ...getColumnSearch(
                 ['seed_name'], 
+                (props) => <>{(props.val)}</>
+            ),
+        },
+        {
+            title: 'Variety',
+            dataIndex: 'variety',
+            editable: true,
+            key: 'variety',
+            ...getColumnSearch(
+                ['variety'], 
                 (props) => <>{(props.val)}</>
             ),
         },
