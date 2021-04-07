@@ -6,7 +6,8 @@ import { Button, Select } from 'antd';
 import { PlusOutlined} from '@ant-design/icons';
 import { Container, Table } from '../../../components'
 import AdvisoryTable from '../components/AdvisoryTable';
-import ProvinceModal from '../components/ProvinceModal';
+// import ProvinceModal from '../components/ProvinceModal';
+import ProvinceModalCheckbox from '../components/ProviceModalCheckbox';
 
 import { IState } from '../../../ducks';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
@@ -115,7 +116,12 @@ const Landing : React.FC<IProps> = ({fetch_advisories, read_user, list, status, 
                     </Table>
                 </Container.Card>
             </Container>
-            <ProvinceModal
+            {/* <ProvinceModal
+                visible={visible}
+                setVisible={setVisible}
+                type={selected}
+            /> */}
+            <ProvinceModalCheckbox
                 visible={visible}
                 setVisible={setVisible}
                 type={selected}
