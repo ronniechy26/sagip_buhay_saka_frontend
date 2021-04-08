@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Spin, Row, Form, InputNumber, Button, notification } from 'antd';
-import { ModalContainer } from '../../../components';
+import { ModalContainer, LandingHeader } from '../../../components';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import CreditSVG from '../../../Images/credit.svg';
 import { IUser } from '../../../models/UserModel';
@@ -104,23 +104,25 @@ const UpdateCreditModal : React.FC<IProps> = ({
                                 </Form.Item>
                             </Row>
                             <Row>
-                                <Button 
-                                    htmlType="submit" 
-                                    type="primary" 
-                                    icon={<PlusOutlined />} 
-                                    onClick={onSave}
-                                    loading={flag}
-                                >
-                                    Save
-                                </Button>
-                                <Button 
-                                    icon={<CloseOutlined />} 
-                                    style={{marginLeft : '10px'}}
-                                    onClick={() => setVisibleCredit(false)}
-                                    loading={flag}
-                                >
-                                    Cancel
-                                </Button>
+                                <LandingHeader.ButtonWrapper>
+                                    <Button 
+                                        htmlType="submit" 
+                                        type="primary" 
+                                        icon={<PlusOutlined />} 
+                                        onClick={onSave}
+                                        loading={flag}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button 
+                                        icon={<CloseOutlined />} 
+                                        style={{marginLeft : '10px'}}
+                                        onClick={() => setVisibleCredit(false)}
+                                        loading={flag}
+                                    >
+                                        Cancel
+                                    </Button>
+                                </LandingHeader.ButtonWrapper>
                             </Row>
                         </Form>
                     </div>

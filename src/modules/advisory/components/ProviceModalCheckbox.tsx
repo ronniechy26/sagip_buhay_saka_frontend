@@ -3,6 +3,7 @@ import { Modal, Row, Button, Collapse, Checkbox, Divider } from 'antd';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components/macro';
+import { LandingHeader } from '../../../components';
 
 const RegionData = require('../../../data/RegionData.json');
 const ProvinceData = require('../../../data/ProvinceData.json');
@@ -136,21 +137,23 @@ const ProviceModalCheckbox : React.FC<IProps> = ({ visible = false, setVisible, 
                 </Row>
 
                 <Row className="row-margin-top3">
-                    <Button 
-                        htmlType="submit" 
-                        type="primary" 
-                        icon={<PlusOutlined />} 
-                        onClick={onOk}
-                    >
-                        Ok
-                    </Button>
-                    <Button 
-                        icon={<CloseOutlined />} 
-                        style={{marginLeft : '10px'}}
-                        onClick={() => setVisible((prev) => !prev)}
-                    >
-                        Cancel
-                    </Button>
+                    <LandingHeader.ButtonWrapper>
+                        <Button 
+                            htmlType="submit" 
+                            type="primary" 
+                            icon={<PlusOutlined />} 
+                            onClick={onOk}
+                        >
+                            Ok
+                        </Button>
+                        <Button 
+                            icon={<CloseOutlined />} 
+                            style={{marginLeft : '10px'}}
+                            onClick={() => setVisible((prev) => !prev)}
+                        >
+                            Cancel
+                        </Button>
+                    </LandingHeader.ButtonWrapper>
                 </Row>
             </div>
         </Modal>
