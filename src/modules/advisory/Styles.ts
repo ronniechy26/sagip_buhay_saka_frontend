@@ -27,7 +27,7 @@ export const SpanItalic = styled.span`
 
 export const CharCount = styled.span<{count : number}>`
     font-style : italic;
-    color: ${({count}) => (count > 160 ? 'red' : 'gray') };
+    color: ${({count}) => (count > 140 ? 'red' : 'gray') };
     font-size: 14px;
     font-family: 'Montserrat';
 `

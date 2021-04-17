@@ -20,6 +20,7 @@ import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
 import useGetProvince from '../../../hooks/useGetProvince';
+import { getCreditCount } from '../Selector';
 
 interface IMonthTable {
     id : string;
@@ -71,13 +72,6 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
     }, [flag, setFlag, status, history]);
 
     const sendMessage = async () =>{
-        if(smsOutput.length > 160){
-            notification.warning({
-                message : 'SMS character count exceeded!',
-                description : 'SMS Output must be less than or equal to 160 characters'
-            });
-            return;
-        }
         if(data.length === 1){
             notification.warning({
                 message : 'Rainfall data missing',
@@ -92,7 +86,8 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
                 ...rowData,
                 sms_output : smsOutput,
                 forecast_date : moment().format('MM-DD-YYYY'),
-                forecast_data : data
+                forecast_data : data,
+                credit : getCreditCount(smsOutput.length, count)
             }
             if(user_log?.role !== 'LGU' && province){
                 payload['province'] = province;
@@ -232,7 +227,7 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
                         <SpanItalic>{`*There are ${count} recipient/s`}</SpanItalic>
                     </Row>
                     <Row className="row-margin-top row-margin-bottom2">
-                        <SpanItalic>{`**This will consume ${count} credit/s`}</SpanItalic>
+                        <SpanItalic>{`**This will consume ${getCreditCount(smsOutput.length, count)} credit/s`}</SpanItalic>
                     </Row>
                     <LandingHeader.ButtonWrapper>
                         <Button 

@@ -13,6 +13,7 @@ import useGetProvince from '../../../hooks/useGetProvince';
 import { IState } from '../../../ducks';
 import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
+import { getCreditCount } from '../Selector';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -24,7 +25,7 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
     const [ flag, setFlag ] = useState(false);
     const [ count ] = useGetNumberOfRecipient();
     const [ province ] = useGetProvince();
-
+ 
     useEffect(() => {
         if (flag && advisory_status['ADVISORIES_ADD_OTHER_WEATHER'] ) {
             if (advisory_status['ADVISORIES_ADD_OTHER_WEATHER'].error === null) {
@@ -42,7 +43,6 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
     const onValuesChange = (changedFields, { 
         advisory,
      }) =>{
-        if(!advisory) return;
         let sms_output = "";
         if(advisory){
             sms_output = `${sms_output} Advisory : ${advisory}`
@@ -51,19 +51,13 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
     }
 
     const sendMessage =  async () =>{
-        if(smsOutput.length > 160){
-            notification.warning({
-                message : 'SMS character count exceeded!',
-                description : 'SMS Output must be less than or equal to 160 characters'
-            });
-            return;
-        }
         try {
             const data = await form.validateFields();
             const payload = { 
                 ...data,
                 sms_output : smsOutput,
-                province
+                province,
+                credit : getCreditCount(smsOutput.length, count)
             }
             add_other_weather(payload);
             setTimeout(() => setFlag(true), 500);
@@ -84,7 +78,7 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
                         <Container.Title2>{`Other Weather System`}</Container.Title2>
                     </Row>
                     <Row className="row-margin-bottom2">
-                        <Col span={3}>
+                        <Col span={4}>
                             <ModalContainer.Label>Advisory : </ModalContainer.Label>
                         </Col>
                         <Col span={12}>
@@ -92,7 +86,7 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
                                 name="advisory"
                                 rules={[{ required: true, message: 'Please input required fields!' }]}
                             >
-                                <Input.TextArea rows={3}/>
+                                <Input.TextArea rows={5}/>
                             </Form.Item> 
                         </Col>
                     </Row>
@@ -113,7 +107,7 @@ const OtherWeatherLanding : React.FC<IProps> = ({advisory_status, add_other_weat
                         <SpanItalic>{`*There are ${count} recipient/s`}</SpanItalic>
                     </Row>
                     <Row className="row-margin-top row-margin-bottom2">
-                        <SpanItalic>{`**This will consume ${count} credit/s`}</SpanItalic>
+                        <SpanItalic>{`**This will consume ${getCreditCount(smsOutput.length, count)} credit/s`}</SpanItalic>
                     </Row>
                     <LandingHeader.ButtonWrapper>
                         <Button 

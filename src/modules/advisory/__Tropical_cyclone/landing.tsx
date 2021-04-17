@@ -14,6 +14,7 @@ import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
 import useGetProvince from '../../../hooks/useGetProvince';
+import { getCreditCount } from '../Selector';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -69,19 +70,13 @@ const TropicalCycloneLanding : React.FC<IProps> = ({add_tropical_cyclone, adviso
     }
 
     const sendMessage =  async () =>{
-        if(smsOutput.length > 160){
-            notification.warning({
-                message : 'SMS character count exceeded!',
-                description : 'SMS Output must be less than or equal to 160 characters'
-            });
-            return;
-        }
         try {
             const data = await form.validateFields();
             const payload = { 
                 ...data,
                 sms_output : smsOutput,
-                province 
+                province,
+                credit : getCreditCount(smsOutput.length, count) 
             }
             add_tropical_cyclone(payload);
             setTimeout(() => setFlag(true), 500);
@@ -193,7 +188,7 @@ const TropicalCycloneLanding : React.FC<IProps> = ({add_tropical_cyclone, adviso
                         <SpanItalic>{`*There are ${count} recipient/s`}</SpanItalic>
                     </Row>
                     <Row className="row-margin-top row-margin-bottom2">
-                        <SpanItalic>{`**This will consume ${count} credit/s`}</SpanItalic>
+                        <SpanItalic>{`**This will consume ${getCreditCount(smsOutput.length, count)} credit/s`}</SpanItalic>
                     </Row>
                     <LandingHeader.ButtonWrapper>
                         <Button 

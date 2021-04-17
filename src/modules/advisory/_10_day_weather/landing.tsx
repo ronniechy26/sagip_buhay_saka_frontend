@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import moment from 'moment';
-import reactComponentDebounce from 'react-component-debounce';
+// import reactComponentDebounce from 'react-component-debounce';
 import { Row, Col, DatePicker, Input, Button, Form, notification } from 'antd';
 import { SendOutlined} from '@ant-design/icons';
 import { cloneDeep } from 'lodash';
@@ -15,21 +15,16 @@ import LivelihoodList from './components/LivelihoodList';
 
 import { IState } from '../../../ducks';
 import { asyncActions as LAsyncAction } from '../../../ducks/LivelihoodDucks';
-import { asyncActions as PAsyncAction } from '../../../ducks/ProductionStageDucks';
-import { asyncActions as RAsyncAction } from '../../../ducks/RiskDucks';
 import { ILivelihood } from '../../../models/LivelihoodModel';
-import { IProductionStage } from '../../../models/ProductionStageModel';
-import { IRisk } from '../../../models/RiskModel';
 import { getLivelihoodActiveStatus } from '../../../selectors/LivelihoodSelector'; 
-import { getProductionStageActiveStatus } from '../../../selectors/ProductionStageSelector'; 
-import { getRiskActiveStatus } from '../../../selectors/RiskSelector'; 
 import { asyncActions as AdvisoryAction } from '../../../ducks/AdvisoryDucks';
 import { IAdvisory } from '../../../models/AdvisoryModel';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
 import useGetProvince from '../../../hooks/useGetProvince';
+import { getCreditCount } from '../Selector';
 
-const TextArea = reactComponentDebounce(150, 200)(Input.TextArea);
+// const TextArea = reactComponentDebounce(150, 200)(Input.TextArea);
 
 export interface IDates {
     id : string;
@@ -197,19 +192,13 @@ const Landing : React.FC<IProps> = ({
     }, [flag, setFlag, advisory_status, history]);
 
     const sendAdvisory = async () =>{
-        if(smsOutput.length > 160){
-            notification.warning({
-                message : 'SMS character count exceeded!',
-                description : 'SMS Output must be less than or equal to 160 characters'
-            });
-            return;
-        }
         try {
             const data = await form.validateFields();
-            const payload : IAdvisory = {
+            const payload = {
                 sms_output : smsOutput,
                 forecast_date : data.forecast_date,
-                forecast_data : dates
+                forecast_data : dates,
+                credit : getCreditCount(smsOutput.length, count)
             }
             if(user_log?.role !== 'LGU' && province){
                 payload['province'] = province;
@@ -318,7 +307,7 @@ const Landing : React.FC<IProps> = ({
                             <SpanItalic>{`*There are ${count} recipient/s`}</SpanItalic>
                         </Row>
                         <Row className="row-margin-top row-margin-bottom2">
-                            <SpanItalic>{`**This will consume ${count} credit/s`}</SpanItalic>
+                            <SpanItalic>{`**This will consume ${getCreditCount(smsOutput.length, count)} credit/s`}</SpanItalic>
                         </Row>
                         <LandingHeader.ButtonWrapper>
                             <Button 

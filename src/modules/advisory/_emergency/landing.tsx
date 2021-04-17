@@ -15,6 +15,7 @@ import { asyncActions } from '../../../ducks/AdvisoryDucks';
 import { getAdvisoryStatus } from '../../../selectors/AdvisorySeletors';
 import useGetNumberOfRecipient from '../../../hooks/useGetNumberOfRecipient';
 import useGetProvince from '../../../hooks/useGetProvince';
+import { getCreditCount } from '../Selector';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -44,18 +45,12 @@ const EmergencyLanding : React.FC<IProps> = ({add_emergency, advisory_status, us
     }, [flag, setFlag, advisory_status, history]);
 
     const sendMessage =  async () =>{
-        if(smsOutput.length > 160){
-            notification.warning({
-                message : 'SMS character count exceeded!',
-                description : 'SMS Output must be less than or equal to 160 characters'
-            });
-            return;
-        }
         try {
             const data = await form.validateFields();
             const payload = { 
                 ...data,
-                sms_output : smsOutput
+                sms_output : smsOutput,
+                credit : getCreditCount(smsOutput.length, count)
             }
             if(user_log?.role !== 'LGU' && province){
                 payload['province'] = province;
@@ -170,7 +165,7 @@ const EmergencyLanding : React.FC<IProps> = ({add_emergency, advisory_status, us
                         <SpanItalic>{`*There are ${count} recipient/s`}</SpanItalic>
                     </Row>
                     <Row className="row-margin-top row-margin-bottom2">
-                        <SpanItalic>{`**This will consume ${count} credit/s`}</SpanItalic>
+                        <SpanItalic>{`**This will consume ${getCreditCount(smsOutput.length, count)} credit/s`}</SpanItalic>
                     </Row>
                     <LandingHeader.ButtonWrapper>
                         <Button 
