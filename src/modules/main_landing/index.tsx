@@ -252,10 +252,11 @@ const subs = [
     // 'risk',
     'planting',
     'seed','other',
-    'actualrainfall',
-    'normalrainfall',
-    'el_nino_rainfall',
-    'la_nina_rainfall'
+    'climate_data',
+    // 'actualrainfall',
+    // 'normalrainfall',
+    // 'el_nino_rainfall',
+    // 'la_nina_rainfall'
 ];
 
 interface IMenu {
@@ -352,42 +353,48 @@ const MenuItem : IMenu[] = [
                 name : 'Other Advise',
                 link:'/sagip/configuration/other',
             },
+            {
+                id : '4-7',
+                key : "climate_data",
+                name : 'Climate Data',
+                link:'/sagip/configuration/climate_data',
+            },
         ]
     },
-    {
-        id : '5',
-        key : "rainfall",
-        name : 'Rainfall',
-        link:'/sagip/configuration',
-        icon : <FundViewOutlined style={iconstyle}/> ,
-        permission : ['R1', 'LGU'],
-        subMenu : [
-            {
-                id : '5-1',
-                key : "actualrainfall",
-                name : 'Actual Rainfall',
-                link:'/sagip/configuration/actualrainfall',
-            },
-            {
-                id : '5-2',
-                key : "normalrainfall",
-                name : 'Normal Rainfall',
-                link:'/sagip/configuration/normalrainfall',
-            },
-            {
-                id : '5-3',
-                key : "el_nino_rainfall",
-                name : 'El Niño Rainfall',
-                link:'/sagip/configuration/el_nino_rainfall',
-            },
-            {
-                id : '5-4',
-                key : "la_nina_rainfall",
-                name : 'La Niña Rainfall',
-                link:'/sagip/configuration/la_nina_rainfall',
-            }
-        ]
-    },
+    // {
+    //     id : '5',
+    //     key : "rainfall",
+    //     name : 'Rainfall',
+    //     link:'/sagip/configuration',
+    //     icon : <FundViewOutlined style={iconstyle}/> ,
+    //     permission : ['R1', 'LGU'],
+    //     subMenu : [
+    //         {
+    //             id : '5-1',
+    //             key : "actualrainfall",
+    //             name : 'Actual Rainfall',
+    //             link:'/sagip/configuration/actualrainfall',
+    //         },
+    //         {
+    //             id : '5-2',
+    //             key : "normalrainfall",
+    //             name : 'Normal Rainfall',
+    //             link:'/sagip/configuration/normalrainfall',
+    //         },
+    //         {
+    //             id : '5-3',
+    //             key : "el_nino_rainfall",
+    //             name : 'El Niño Rainfall',
+    //             link:'/sagip/configuration/el_nino_rainfall',
+    //         },
+    //         {
+    //             id : '5-4',
+    //             key : "la_nina_rainfall",
+    //             name : 'La Niña Rainfall',
+    //             link:'/sagip/configuration/la_nina_rainfall',
+    //         }
+    //     ]
+    // },
     {
         id : '6',
         key : "users",

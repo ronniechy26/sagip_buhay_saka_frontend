@@ -42,15 +42,16 @@ const ProviceModalCheckbox : React.FC<IProps> = ({ visible = false, setVisible, 
     const render_header = (region : any) => {
         const selected = selectedList.find(x => x.regCode === region.regCode);
         return (
-            <div onClick={(e) => e.stopPropagation()}>
+            <span onClick={(e) => e.stopPropagation()}>
                 <StyledCheckbox
                     indeterminate={selected.inderterminate}
                     checked={selected.checkAll}
                     onChange={(e) => headerOnchange(e,region.regCode)}
+                
                 >
                     {region.title}
                 </StyledCheckbox>
-            </div>
+            </span>
         )
     }
 

@@ -63,7 +63,7 @@ const RainfallTable : React.FC<IProps>  = ({data = [], loading, read_actual_rain
             columns={columns} 
             loading={loading}
             dataSource={data} 
-    />
+        />
     )
 }
 

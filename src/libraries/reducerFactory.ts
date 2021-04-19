@@ -14,6 +14,7 @@ import { FeedbackReducer, IFeedbackState } from '../ducks/FeedbackDucks';
 import { LaNinaRainfallReducer, ILaNinaRainfallState} from '../ducks/LaNinaRainfallDucks';
 import { ElNinoRainfallReducer, IElNinoRainfallState} from '../ducks/ElNinoRainfallDucks';
 import { DashboardReducer, IDashboardState} from '../ducks/DashboardDucks';
+import { ClimateDataReducer, IClimateDataState} from '../ducks/ClimateDataDucks'
 
 export interface IReducerWrapper {
     (reducer: typeof UserReducer, defaultState: IUserState): typeof UserReducer;
@@ -31,6 +32,7 @@ export interface IReducerWrapper {
     (reducer: typeof LaNinaRainfallReducer, defaultState: ILaNinaRainfallState): typeof LaNinaRainfallReducer;
     (reducer: typeof ElNinoRainfallReducer, defaultState: IElNinoRainfallState): typeof ElNinoRainfallReducer;
     (reducer: typeof DashboardReducer, defaultState: IDashboardState): typeof DashboardReducer;
+    (reducer: typeof ClimateDataReducer, defaultState: IClimateDataState): typeof ClimateDataReducer;
 }
 
 export const reducerFactory: IReducerWrapper = (reducer, defaultState) => {
