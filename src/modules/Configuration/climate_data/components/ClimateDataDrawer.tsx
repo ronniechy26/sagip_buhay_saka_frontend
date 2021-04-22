@@ -130,10 +130,10 @@ const ClimateDataDrawer : React.FC<IProps> = ({
         }
         if(action === 'edit'){
             update_climate_data(data.id, payload);
-            setTimeout(() => setFlag(true), 500);
+            setTimeout(() => setFlag(true), 800);
         }else{
             add_climate_data(payload);
-            setTimeout(() => setFlag(true), 500);
+            setTimeout(() => setFlag(true), 800);
         }
     }, [setFlag, action, add_climate_data,update_climate_data,data,user]);
 

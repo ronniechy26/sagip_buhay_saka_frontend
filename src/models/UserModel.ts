@@ -1,7 +1,7 @@
 import * as yup from 'yup';
 
 const userInitialShape = {
-    id: yup.string(),
+    id: yup.string().required(),
     created_at: yup
         .string()
         .nullable()

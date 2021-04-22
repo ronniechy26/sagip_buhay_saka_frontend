@@ -11,6 +11,9 @@ import services from '../services/DashboardService';
 
 export const actionTypes = {
     GET_RAINFALL : 'GET_RAINFALL',
+    GET_MIN_TEMP : 'GET_MIN_TEMP',
+    GET_MAX_TEMP : 'GET_MAX_TEMP',
+    GET_MEAN_TEMP : 'GET_MEAN_TEMP'
 } as const;
 
 const thunkActions = {
@@ -18,6 +21,18 @@ const thunkActions = {
         type: actionTypes.GET_RAINFALL,
         service: services.get_dashboard_rainfall,
     },
+    get_dashboard_min_temp : {
+        type: actionTypes.GET_MIN_TEMP,
+        service: services.get_dashboard_min_temp,
+    },
+    get_dashboard_max_temp : {
+        type: actionTypes.GET_MAX_TEMP,
+        service: services.get_dashboard_max_temp,
+    },
+    get_dashboard_mean_temp : {
+        type: actionTypes.GET_MEAN_TEMP,
+        service: services.get_dashboard_mean_temp,
+    }
 };
 
 export const asyncActions = ThunkFactory(thunkActions);
@@ -34,6 +49,9 @@ export type IReducerAction = IAsyncAction;
 
 export interface IDashboardState extends ICommonState<IReducerAction> {
     rainfall? : Array<IDashboardRainfall>,
+    min_temp? : Array<IDashboardRainfall>,
+    mean_temp? : Array<IDashboardRainfall>,
+    max_temp? : Array<IDashboardRainfall>,
 }
 
 const defaultState: IDashboardState = {
@@ -49,6 +67,21 @@ export const DashboardReducer = (
             return {
                 ...state,
                 rainfall : action.payload.data,
+            };
+        case actionTypes.GET_MAX_TEMP : 
+            return {
+                ...state,
+                max_temp : action.payload.data,
+            };
+        case actionTypes.GET_MEAN_TEMP : 
+            return {
+                ...state,
+                mean_temp : action.payload.data,
+            };
+        case actionTypes.GET_MIN_TEMP : 
+            return {
+                ...state,
+                min_temp : action.payload.data,
             };
         default:
             return state;

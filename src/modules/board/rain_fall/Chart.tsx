@@ -7,7 +7,9 @@ import {
   Legend,
   ResponsiveContainer,
   LineChart,
-  Line
+  Line,
+  Bar,
+  ComposedChart
 } from "recharts";
 import CustomizedAxisTick from '../components/CustomizedAxisTick';
 
@@ -24,13 +26,13 @@ const Chart : React.FC<IProps> = ({ data }) => {
 
     return (
         <ResponsiveContainer height={500} width={'95%'}>
-            <LineChart
+            <ComposedChart
                 data={data}
                 margin={{ top: 20, right: 0, left: 20, bottom: 5 }}
             >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" height={60} tick={<CustomizedAxisTick/>}  />
-                <YAxis />
+                <XAxis dataKey="month" height={60} tick={<CustomizedAxisTick/>} />
+                <YAxis type="number" domain={[0, 'dataMax']} />
                 <Tooltip />
                 <Legend 
                     layout="vertical" 
@@ -40,14 +42,15 @@ const Chart : React.FC<IProps> = ({ data }) => {
                     iconType="rect"
                     formatter={renderColorfulLegendText} 
                 />
-                <Line type="monotone" dataKey="normal"  stroke="#98D0FF" activeDot={{r: 8}} />
+                <Bar dataKey="normal" barSize={40} fill="#98D0FF" />
+                {/* <Line type="monotone" dataKey="normal"  stroke="#98D0FF" activeDot={{r: 8}} /> */}
                 <Line type="monotone" dataKey="el_nino"  stroke="#e94452" />
                 <Line type="monotone" dataKey="la_nina"  stroke="#4f6cce" />
-                <Line type="monotone" dataKey="actual"  stroke="#50e95d"   />
-                <Line type="monotone" dataKey="forecast"  stroke="#81898f" />
-            </LineChart>
+                <Line type="monotone" dataKey="actual_year"  stroke="#50e95d"   />
+                <Line type="monotone" dataKey="projection_2050"  stroke="#81898f" />
+            </ComposedChart>
         </ResponsiveContainer>
-        );
+    );
     
 }
 

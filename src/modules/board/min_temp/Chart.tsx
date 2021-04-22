@@ -7,7 +7,10 @@ import {
   Legend,
   ResponsiveContainer,
   LineChart,
-  Line
+  Line,
+  ComposedChart,
+  Area,
+  AreaChart
 } from "recharts";
 import CustomizedAxisTick from '../components/CustomizedAxisTick';
 import {renderColorfulLegendText} from '../components/Legend';
@@ -20,7 +23,7 @@ const Chart : React.FC<IProps> = ({ data }) => {
 
     return (
         <ResponsiveContainer height={500} width={'95%'}>
-             <LineChart
+             <AreaChart
                 data={data}
                 margin={{ top: 20, right: 0, left: 20, bottom: 5 }}
             >
@@ -36,10 +39,18 @@ const Chart : React.FC<IProps> = ({ data }) => {
                     iconType="rect"
                     formatter={renderColorfulLegendText} 
                 />
-                <Line type="monotone" dataKey="normal"  stroke="#98D0FF" activeDot={{r: 8}} />
-                <Line type="monotone" dataKey="actual"  stroke="#50e95d"   />
-                <Line type="monotone" dataKey="forecast"  stroke="#81898f" />
-            </LineChart>
+                    <Area type="monotone" dataKey="normal"  stroke="#98D0FF" fill="#98D0FF" activeDot={{r: 8}} />
+                    <Area type="monotone" dataKey="el_nino"  stroke="#fa091d" fill="#e94452"/>
+                    <Area type="monotone" dataKey="la_nina"  stroke="#063ef8" fill="#4f6cce"/>
+                    <Area type="monotone" dataKey="actual_year"  stroke="#00ff15"  fill="#50e95d"/>
+                    <Area type="monotone" dataKey="projection_2050"  stroke="#616161" fill="#81898f"/>
+
+                      {/* <Line type="monotone" dataKey="normal"  stroke="#98D0FF" activeDot={{r: 8}} /> */}
+                    {/* <Line type="monotone" dataKey="el_nino"  stroke="#e94452" />
+                    <Line type="monotone" dataKey="la_nina"  stroke="#4f6cce" />
+                    <Line type="monotone" dataKey="actual_year"  stroke="#50e95d"   />
+                    <Line type="monotone" dataKey="projection_2050"  stroke="#81898f" /> */}
+            </AreaChart>
         </ResponsiveContainer>
         );
     

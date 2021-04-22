@@ -1,6 +1,7 @@
 export * from './ActionConstant';
 export * from './UserContants';
 export * from './AdvisoryConstant';
+export * from './ClimateDataConstant';
 
 export const StatusFilter = [
     {
