@@ -133,6 +133,27 @@ const SeasonalLanding : React.FC<IProps> = ({best_seed, fetch_seeds, add_seasona
                             </Button>
                         </LandingHeader.ButtonWrapper>
                     </FlexDiv>
+
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}}>
+                        <div>
+                            <Container.Title3>{`Click link below to access relevant PAGASA forecast product/s`}</Container.Title3> 
+                        </div>
+                      
+                    </div>
+
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}}>
+                        <a href="http://bagong.pagasa.dost.gov.ph/climate/climate-monthly-monitoring-products" target="_blank">
+                            http://bagong.pagasa.dost.gov.ph/climate/climate-monthly-monitoring-products
+                        </a>
+                      
+                    </div>
+                    
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}} className="row-margin-bottom2">
+                        <a href="http://bagong.pagasa.dost.gov.ph/climate" target="_blank">
+                            http://bagong.pagasa.dost.gov.ph/climate
+                        </a>       
+                    </div>
+
                     <Table.Header>
                         <ModalContainer.Label><i>{`Forecast Rainfall for 6 months`}</i></ModalContainer.Label>
                         <Table.ButtonWrapper>

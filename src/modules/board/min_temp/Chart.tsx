@@ -44,6 +44,7 @@ const Chart : React.FC<IProps> = ({ data }) => {
                     <Area type="monotone" dataKey="la_nina"  stroke="#063ef8" fill="#4f6cce"/>
                     <Area type="monotone" dataKey="actual_year"  stroke="#00ff15"  fill="#50e95d"/>
                     <Area type="monotone" dataKey="projection_2050"  stroke="#616161" fill="#81898f"/>
+                    <Area type="monotone" dataKey="forecast"  stroke="#f54906" fill="#f54906"/>
 
                       {/* <Line type="monotone" dataKey="normal"  stroke="#98D0FF" activeDot={{r: 8}} /> */}
                     {/* <Line type="monotone" dataKey="el_nino"  stroke="#e94452" />

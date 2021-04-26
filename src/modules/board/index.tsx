@@ -6,6 +6,8 @@ import Icon from '@ant-design/icons';
 
 import Rainfall from './rain_fall/index';
 import MinTemp from './min_temp/index';
+import MeanTemp from './mean_temp/index';
+import MaxTemp from './max_temp/index';
 
 import { IState } from '../../ducks';
 import { asyncActions } from '../../ducks/DashboardDucks';
@@ -107,6 +109,14 @@ const Board : React.FC<IProps> = ({
                     status={status}
                     data={ min_temp as IDashboardRainfall[] }
                 />  
+                <MeanTemp
+                    status={status}
+                    data={ mean_temp as IDashboardRainfall[] }
+                />
+                <MaxTemp
+                    status={status}
+                    data={ max_temp as IDashboardRainfall[] }
+                />
             </div>
         </Fragment>
     )

@@ -54,6 +54,22 @@ export const HeaderTitle2 = styled.h1`
 
 `
 
+export const HeaderTitle3 = styled.h1`
+    color : #006064;
+    font-weight : 900;
+    font-size : 16px;
+
+    ${media.tablet}{
+        font-size : 16px;
+    }
+
+    ${media.phone}{
+        font-size : 14px;
+    }
+
+`
+
+
 export const HeaderTitleValue = styled.span`
     color : #006064;
     font-family: 'Montserrat';

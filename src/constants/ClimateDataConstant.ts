@@ -11,5 +11,6 @@ export const data_input  : Array<string>= [
     'El Nino',
     'La Nina',
     'Actual Year',
-    '2050 Projection'
+    'Forecast',
+    '2050 Projection',
 ];

@@ -220,9 +220,21 @@ const Landing : React.FC<IProps> = ({
                     form={form}
                 >
                     <Container.Card minHeight={'80vh'}>
-                        <Row className="row-margin-bottom2">
-                            <Container.Title2>{`10 day Weather Advisory`}</Container.Title2>
-                        </Row>
+                        <div className="row-margin-bottom2" style={{display : 'flex', justifyContent : 'space-between'}}>
+                            <Row >
+                                <Container.Title2>{`10 day Weather Advisory`}</Container.Title2>
+                            </Row>
+                            <div>
+                                <div>
+                                    <Container.Title3>{`Click link below to access relevant PAGASA forecast product/s`}</Container.Title3> 
+                                </div>
+                              
+                                <a href="http://bagong.pagasa.dost.gov.ph/climate/climate-prediction/10-day-climate-forecast" target="_blank">
+                                    http://bagong.pagasa.dost.gov.ph/climate/climate-prediction/10-day-climate-forecast
+                                </a>
+                            </div>
+                        </div>
+                      
                         <Row>
                             <Col span={3}>
                                 <ModalContainer.Label>Forecast Date:</ModalContainer.Label>

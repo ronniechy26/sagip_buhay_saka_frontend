@@ -48,6 +48,8 @@ const Chart : React.FC<IProps> = ({ data }) => {
                 <Line type="monotone" dataKey="la_nina"  stroke="#4f6cce" />
                 <Line type="monotone" dataKey="actual_year"  stroke="#50e95d"   />
                 <Line type="monotone" dataKey="projection_2050"  stroke="#81898f" />
+                <Line type="monotone" dataKey="forecast"  stroke="#f54906" />
+                Forecast
             </ComposedChart>
         </ResponsiveContainer>
     );

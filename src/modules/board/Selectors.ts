@@ -7,6 +7,7 @@ export const ModifyData = (param :  Array<IDashboardRainfall>  = []) =>{
     const la_nina = param.find(x => x.data_input === 'La Nina');
     const actual_year = param.find(x => x.data_input === 'Actual Year');
     const projection = param.find(x => x.data_input === '2050 Projection');
+    const forecast = param.find(x => x.data_input === 'Forecast');
 
     const data = months.map((item, index) =>{
         return{
@@ -17,6 +18,7 @@ export const ModifyData = (param :  Array<IDashboardRainfall>  = []) =>{
             la_nina: la_nina ? convertStringToInt(la_nina[item.text.toLocaleLowerCase()]) : 0,
             actual_year: actual_year ? convertStringToInt(actual_year[item.text.toLocaleLowerCase()]) : 0,
             projection_2050: projection ? convertStringToInt(projection[item.text.toLocaleLowerCase()]) : 0,
+            forecast: forecast ? convertStringToInt(forecast[item.text.toLocaleLowerCase()]) : 0,
         }
     })
 

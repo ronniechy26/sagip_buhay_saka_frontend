@@ -123,6 +123,16 @@ const GaleWarningLanding : React.FC<IProps> = ({add_gale_warning, advisory_statu
                             </Button>
                         </LandingHeader.ButtonWrapper>
                     </FlexDiv>
+
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}}>
+                        <Container.Title3>{`Click link below to access relevant PAGASA forecast product/s`}</Container.Title3> 
+                    </div>
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}} className="row-margin-bottom2">
+                        <a href="http://bagong.pagasa.dost.gov.ph/marine#gale-warning" target="_blank">
+                            http://bagong.pagasa.dost.gov.ph/marine#gale-warning
+                        </a>
+                    </div>
+
                     <Row>
                         <Col span={4}>
                             <ModalContainer.Label>Forecast Date :</ModalContainer.Label>

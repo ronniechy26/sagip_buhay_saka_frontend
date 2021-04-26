@@ -102,6 +102,26 @@ const EmergencyLanding : React.FC<IProps> = ({add_emergency, advisory_status, us
                             </Button>
                         </LandingHeader.ButtonWrapper>
                     </FlexDiv>
+
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}}>
+                        <Container.Title3>{`Click link below to access relevant PAGASA forecast product/s`}</Container.Title3> 
+                    </div>
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}}>
+                        <a href="http://bagong.pagasa.dost.gov.ph/climate/el-nino-la-nina/advisories" target="_blank">
+                            http://bagong.pagasa.dost.gov.ph/climate/el-nino-la-nina/advisories
+                        </a>
+                    </div>
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}}>
+                        <a href="http://bagong.pagasa.dost.gov.ph/tropical-cyclone/severe-weather-bulletin" target="_blank">
+                            http://bagong.pagasa.dost.gov.ph/tropical-cyclone/severe-weather-bulletin
+                        </a>
+                    </div>
+                    <div style={{display : 'flex', justifyContent : 'flex-end'}} className="row-margin-bottom2">
+                        <a href="http://bagong.pagasa.dost.gov.ph/flood" target="_blank">
+                            http://bagong.pagasa.dost.gov.ph/flood
+                        </a>
+                    </div>
+
                     <Row>
                         <Col span={4}>
                             <ModalContainer.Label>Forecast Date:</ModalContainer.Label>
