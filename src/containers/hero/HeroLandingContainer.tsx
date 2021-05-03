@@ -25,10 +25,11 @@ const HeroLandingContainer : React.FC = () => {
                 </HeroLanding.Heading>
                 <HeroLanding.Divider/>
                 <HeroLanding.Subtitle>
-                    SAGIP Buhay at Saka is a short messaging service (SMS) providing climate-based
-                    warning services to men and women farmers, fishers and to other agriculture-fisheries stakeholders. These warnings,
-                    weather and climate information come from PAGASA and the local government to help farmers manage climate 
-                    risks and help reduce losses and damages to life, livelihoods and community assets.
+                    Sagip Buhay at Saka is a short messaging service (sms) designed to communicate 
+                    climate-based warnings to farmers, fishers and other community members. 
+                    The warnings are generally from PAGASA and translated into agriculture risk management advisories 
+                    by local government partners. The service is meant to help agriculture stakeholders manage 
+                    climate risks and reduce damage and losses to life, livelihoods and other community assets.
                 </HeroLanding.Subtitle>
                 <HeroLanding.BtnWrap>
                         <HeroLanding.LinkButton 
