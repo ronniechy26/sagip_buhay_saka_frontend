@@ -1,1 +1,0 @@
-scp -r build buhayatsaka@148.66.129.101:/home/buhayatsaka/sagip_buhay_saka_frontend
