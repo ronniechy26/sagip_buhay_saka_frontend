@@ -16,6 +16,7 @@ export const actionTypes = {
     RECIPIENT_UPDATE : 'RECIPIENT_UPDATE',
     RECIPIENT_ACTIVATE : 'RECIPIENT_ACTIVATE',
     RECIPIENT_DEACTIVATE : 'RECIPIENT_DEACTIVATE',
+    RECIPIENT_DELETE : 'RECIPIENT_DELETE',
 } as const;
 
 const thunkActions = {
@@ -42,6 +43,10 @@ const thunkActions = {
     activate_recipient : {
         type: actionTypes.RECIPIENT_ACTIVATE,
         service: services.activate_recipient,
+    },
+    delete_recipient : {
+        type: actionTypes.RECIPIENT_DELETE,
+        service: services.delete_recipient,
     },
 };
 
@@ -90,6 +95,11 @@ export const RecipientReducer = (
             };
 
         case actionTypes.RECIPIENT_DEACTIVATE : 
+            return {
+                ...state,
+                data : action.payload.recipient,
+            };
+        case actionTypes.RECIPIENT_DELETE : 
             return {
                 ...state,
                 data : action.payload.recipient,

@@ -19,6 +19,7 @@ const RecipientLanding : React.FC<IProps> = ({
     read_recipient,
     deactivate_recipient,
     activate_recipient,
+    delete_recipient,
     data,
     list,
     status
@@ -74,6 +75,7 @@ const RecipientLanding : React.FC<IProps> = ({
                             status={status}
                             deactivate_recipient={deactivate_recipient}
                             activate_recipient={activate_recipient}
+                            delete_recipient={delete_recipient}
                         />
                     </Table>
                 </Container.Card>
@@ -95,6 +97,7 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
             read_recipient : asyncActions.read_recipient,
             deactivate_recipient : asyncActions.deactivate_recipient,
             activate_recipient : asyncActions.activate_recipient,
+            delete_recipient : asyncActions.delete_recipient
         },
         dispatch
     );

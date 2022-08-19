@@ -26,6 +26,9 @@ const services = {
     activate_recipient: async (id : string) => {
         return await client.put(`api/recipient/activate/${id}`, {}, RecipientAddEditSchema);
     },
+    delete_recipient: async (id : string) => {
+        return await client.delete(`/api/recipient/${id}`, {}, RecipientAddEditSchema);
+    },
 };
 
 export type IRecipientService = typeof services[keyof typeof services];
