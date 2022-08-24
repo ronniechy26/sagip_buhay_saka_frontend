@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Row, Button, Collapse, Checkbox, Divider } from 'antd';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
@@ -9,45 +9,48 @@ const RegionData = require('../../../data/RegionData.json');
 const ProvinceData = require('../../../data/ProvinceData.json');
 
 interface IProps {
-    visible : boolean;
-    setVisible : React.Dispatch<React.SetStateAction<boolean>>;
-    type : string
+    visible: boolean;
+    setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+    type: string
 }
 
-const ProviceModalCheckbox : React.FC<IProps> = ({ visible = false, setVisible, type }) => {
+const ProviceModalCheckbox: React.FC<IProps> = ({ visible = false, setVisible, type }) => {
     const history = useHistory();
-    const [ selectedList, setSelectedList ] = useState(() =>{
+    const [indeterminate, setIndeterminate] = useState(false);
+    const [checkAll, setCheckAll] = useState(false);
+
+    const [selectedList, setSelectedList] = useState(() => {
         const init = RegionData.map((item) => {
             return {
-                regCode : item.regCode,
-                checkAll : false,
-                inderterminate : false,
-                selected : []
+                regCode: item.regCode,
+                checkAll: false,
+                inderterminate: false,
+                selected: []
             }
         });
         return init;
     });
 
-    const onOk = () =>{
-        const provinces = selectedList.reduce((acc, curr) =>{
+    const onOk = () => {
+        const provinces = selectedList.reduce((acc, curr) => {
             return acc.concat(curr.selected)
         }, []);
 
         history.push({
             pathname: `/sagip/advisory/add/${type}`,
-            state : {province : provinces }
+            state: { province: provinces }
         });
     }
 
-    const render_header = (region : any) => {
+    const render_header = (region: any) => {
         const selected = selectedList.find(x => x.regCode === region.regCode);
         return (
             <span onClick={(e) => e.stopPropagation()}>
                 <StyledCheckbox
                     indeterminate={selected.inderterminate}
                     checked={selected.checkAll}
-                    onChange={(e) => headerOnchange(e,region.regCode)}
-                
+                    onChange={(e) => headerOnchange(e, region.regCode)}
+
                 >
                     {region.title}
                 </StyledCheckbox>
@@ -55,33 +58,81 @@ const ProviceModalCheckbox : React.FC<IProps> = ({ visible = false, setVisible, 
         )
     }
 
-    const headerOnchange = (e, code) =>{
-        const DEFAULT_OPTIONS = ProvinceData.filter( x => x.regCode === code).map((x) => x.provDesc);
-        const temp = selectedList.map((item) =>{
-            return item.regCode === code ? 
-            {
-                ...item, 
-                selected : e.target.checked ? DEFAULT_OPTIONS : [],
-                inderterminate : false,
-                checkAll : e.target.checked
-            } : item;
+    const headerOnchange = (e, code) => {
+        const DEFAULT_OPTIONS = ProvinceData.filter(x => x.regCode === code).map((x) => x.provDesc);
+        const temp = selectedList.map((item) => {
+            return item.regCode === code ?
+                {
+                    ...item,
+                    selected: e.target.checked ? DEFAULT_OPTIONS : [],
+                    inderterminate: false,
+                    checkAll: e.target.checked
+                } : item;
         });
         setSelectedList(temp);
     };
 
-    const onChange = ( list, code) => {
-        const DEFAULT_OPTIONS = ProvinceData.filter( x => x.regCode === code).map((x) => x.provDesc);
-        const temp = selectedList.map((item) =>{
-            return item.regCode === code ? 
-            {
-                ...item, 
-                selected : list,
-                inderterminate : !!list.length  && list.length < DEFAULT_OPTIONS.length,
-                checkAll : list.length === DEFAULT_OPTIONS.length 
-            } : item;
+    const onChange = (list, code) => {
+        const DEFAULT_OPTIONS = ProvinceData.filter(x => x.regCode === code).map((x) => x.provDesc);
+        const temp = selectedList.map((item) => {
+            return item.regCode === code ?
+                {
+                    ...item,
+                    selected: list,
+                    inderterminate: !!list.length && list.length < DEFAULT_OPTIONS.length,
+                    checkAll: list.length === DEFAULT_OPTIONS.length
+                } : item;
         });
         setSelectedList(temp);
     };
+
+    useEffect(() => {
+
+        const checkIfAllisCheck = selectedList.every((item) => {
+            return item.checkAll ? true : false;
+        });
+
+        const checkIfHasSomeCheck = selectedList.some((item) => {
+            return item.checkAll ? true : false;
+        });
+
+        setCheckAll(checkIfAllisCheck);
+
+        if (!checkIfAllisCheck && checkIfHasSomeCheck) {
+            setIndeterminate(true)
+        } else {
+            setIndeterminate(false)
+        }
+
+    }, [selectedList])
+
+    const onSelectAll = () => {
+
+        if (checkAll === true) {
+            const init = RegionData.map((item) => {
+                return {
+                    regCode: item.regCode,
+                    checkAll: false,
+                    inderterminate: false,
+                    selected: []
+                }
+            });
+            setSelectedList(init)
+        } else {
+            const populateAll = RegionData.map((item) => {
+                const DEFAULT_OPTIONS = ProvinceData.filter(
+                    x => x.regCode === item.regCode).map((x) => x.provDesc
+                );
+                return {
+                    regCode: item.regCode,
+                    checkAll: true,
+                    inderterminate: false,
+                    selected: DEFAULT_OPTIONS
+                }
+            });
+            setSelectedList(populateAll)
+        }
+    }
 
     return (
         <Modal
@@ -97,59 +148,84 @@ const ProviceModalCheckbox : React.FC<IProps> = ({ visible = false, setVisible, 
             }}
         >
             <div>
-                <Row className="row-margin-bottom2" > 
+                <Row className="row-margin-bottom2" >
                     <span style={TitleStyle}>Please Select Recipient Location</span>
                 </Row>
-            
+
                 <Row>
                     <DivCollapse>
-                        <Collapse 
+
+                        <Collapse
                             accordion
-                            bordered={false} 
+                            bordered={false}
                         >
-                        {
-                            RegionData.map((region : any, index) =>{
-
-                                const DEFAULT_OPTIONS = ProvinceData.filter( 
-                                    x => x.regCode === region.regCode
-                                ).map((x) => x.provDesc);
-                                const values = selectedList.find(x => x.regCode === region.regCode);
-
-                                return(
-                                    <Collapse.Panel 
-                                        showArrow={false}
-                                        key={index}
-                                        header={render_header(region)}
-                                    >
-                                        <div style={{ paddingBottom: '5px' }}>
-                                            <Divider dashed style={{ margin: '5px 0px 15px 0px' }} />
-                                            <StyledCheckboxGroup
-                                                options={DEFAULT_OPTIONS}
-                                                onChange={(e) =>onChange(e, region.regCode)}
-                                                value={values.selected}
-                                            />
+                            {
+                                <Collapse.Panel
+                                    showArrow={false}
+                                    key={-1}
+                                    disabled={true}
+                                    header={(
+                                        <div>
+                                            <Checkbox style={{ paddingLeft: '10px', }}
+                                                checked={checkAll}
+                                                onChange={onSelectAll}
+                                                indeterminate={indeterminate}
+                                            >
+                                                <span style={{
+                                                    fontFamily: 'Montserrat',
+                                                    color: '#808080',
+                                                    opacity: '1',
+                                                    fontSize: '14px',
+                                                    fontWeight: 'bold'
+                                                }}> Select All</span>
+                                            </Checkbox>
                                         </div>
-                                    </Collapse.Panel>
-                                )
-                            }) 
-                        }
+                                    )}
+                                />
+                            }
+                            {
+                                RegionData.map((region: any, index) => {
+
+                                    const DEFAULT_OPTIONS = ProvinceData.filter(
+                                        x => x.regCode === region.regCode
+                                    ).map((x) => x.provDesc);
+                                    const values = selectedList.find(x => x.regCode === region.regCode);
+
+                                    return (
+                                        <Collapse.Panel
+                                            showArrow={false}
+                                            key={index}
+                                            header={render_header(region)}
+                                        >
+                                            <div style={{ paddingBottom: '5px' }}>
+                                                <Divider dashed style={{ margin: '5px 0px 15px 0px' }} />
+                                                <StyledCheckboxGroup
+                                                    options={DEFAULT_OPTIONS}
+                                                    onChange={(e) => onChange(e, region.regCode)}
+                                                    value={values.selected}
+                                                />
+                                            </div>
+                                        </Collapse.Panel>
+                                    )
+                                })
+                            }
                         </Collapse>
                     </DivCollapse>
                 </Row>
 
                 <Row className="row-margin-top3">
                     <LandingHeader.ButtonWrapper>
-                        <Button 
-                            htmlType="submit" 
-                            type="primary" 
-                            icon={<PlusOutlined />} 
+                        <Button
+                            htmlType="submit"
+                            type="primary"
+                            icon={<PlusOutlined />}
                             onClick={onOk}
                         >
                             Ok
                         </Button>
-                        <Button 
-                            icon={<CloseOutlined />} 
-                            style={{marginLeft : '10px'}}
+                        <Button
+                            icon={<CloseOutlined />}
+                            style={{ marginLeft: '10px' }}
                             onClick={() => setVisible((prev) => !prev)}
                         >
                             Cancel
@@ -163,17 +239,17 @@ const ProviceModalCheckbox : React.FC<IProps> = ({ visible = false, setVisible, 
 
 export default ProviceModalCheckbox
 
-const TitleStyle : React.CSSProperties={
-    fontSize : '18px',
-    color : '#006064',
-    fontWeight : 'bold'
+const TitleStyle: React.CSSProperties = {
+    fontSize: '18px',
+    color: '#006064',
+    fontWeight: 'bold'
 }
 
 const StyledCheckbox = styled(Checkbox)({
     marginLeft: '10px',
     '.ant-checkbox-checked': {
         '.ant-checkbox-inner': {
-            backgroundColor: '#70CCF9', 
+            backgroundColor: '#70CCF9',
             borderColor: '#70CCF9'
         },
     },
@@ -204,7 +280,7 @@ const StyledCheckboxGroup = styled(Checkbox.Group)({
 
     '.ant-checkbox-checked': {
         '.ant-checkbox-inner': {
-            backgroundColor: '#70CCF9', 
+            backgroundColor: '#70CCF9',
             borderColor: '#70CCF9'
         },
     },
