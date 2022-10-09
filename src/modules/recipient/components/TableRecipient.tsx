@@ -124,15 +124,15 @@ const TableRecipient: React.FC<IProps> = ({
                 (props) => <>{render_table_name(props.record)}</>
             ),
         },
-        {
-            title: 'Subscriber',
-            dataIndex: 'is_subscribe',
-            key: 'is_subscribe',
-            filters: SubscriberFilter,
-            filterMultiple: false,
-            onFilter: (value: any, record: any) => record['is_subscribe'] === value,
-            render: (val) => BadgeWrapper.render_badge({ value: val, textIfTrue: 'Subscriber', textIffalse: 'Not Subscriber' })
-        },
+        // {
+        //     title: 'Subscriber',
+        //     dataIndex: 'is_subscribe',
+        //     key: 'is_subscribe',
+        //     filters: SubscriberFilter,
+        //     filterMultiple: false,
+        //     onFilter: (value: any, record: any) => record['is_subscribe'] === value,
+        //     render: (val) => BadgeWrapper.render_badge({ value: val, textIfTrue: 'Subscriber', textIffalse: 'Not Subscriber' })
+        // },
         {
             title: 'Mobile Number',
             dataIndex: 'contact_number',
