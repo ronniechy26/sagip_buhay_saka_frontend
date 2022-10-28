@@ -34,6 +34,9 @@ const services = {
     update_credit : async (id : string, data : any) =>{
         return await client.put(`api/user/update_credits/${id}`, data, UserAddEditSchema);
     },
+    change_password : async (id : string, data : any) =>{
+        return await client.put(`api/user/change-password/${id}`, data, UserAddEditSchema);
+    },
 };
 
 export type IUserService = typeof services[keyof typeof services];

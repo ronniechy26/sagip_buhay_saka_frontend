@@ -1,6 +1,6 @@
 import React from 'react'
 import { Table, Switch, notification} from 'antd';
-import { EditOutlined, CreditCardOutlined } from '@ant-design/icons';
+import { EditOutlined, CreditCardOutlined, UserSwitchOutlined  } from '@ant-design/icons';
 import  moment from 'moment';
 import { ColumnsType } from 'antd/es/table';
 import { IUser } from '../../../models/UserModel';
@@ -20,6 +20,7 @@ type IProps = {
     setAction : React.Dispatch<React.SetStateAction<IAction>>;
     setVisible : React.Dispatch<React.SetStateAction<boolean>>;
     setVisibleCredit : React.Dispatch<React.SetStateAction<boolean>>;
+    setChangePasswordVisible : React.Dispatch<React.SetStateAction<boolean>>;
     fetch_user : (id : string) => void;
 };
 
@@ -31,6 +32,7 @@ const TableUsers : React.FC<IProps> = ({
     setVisible,
     fetch_user,
     setVisibleCredit,
+    setChangePasswordVisible,
     list, 
     loading, 
     ...props
@@ -62,6 +64,11 @@ const TableUsers : React.FC<IProps> = ({
     const onEditCredit = async (id : string) =>{
         await fetch_user(id);
         setVisibleCredit(true);
+    }
+
+    const onChangePassword = async (id : string) => {
+        await fetch_user(id);
+        setChangePasswordVisible(true);
     }
 
     const columns : ColumnsType<IUser> = [
@@ -131,6 +138,7 @@ const TableUsers : React.FC<IProps> = ({
             render: (value : any, record : any) => {
                 return (
                     <ActionButton>
+                        <UserSwitchOutlined onClick={() => onChangePassword(record.id)}/>
                         <CreditCardOutlined onClick={() => onEditCredit(record.id)} />
                         <EditOutlined onClick={() => onEdit(record.id)}/>
                     </ActionButton>

@@ -22,7 +22,8 @@ export const actionTypes = {
     USER_SET_SELECTED : 'USER_SET_SELECTED',
     USER_UPDATE : 'USER_UPDATE',
     USER_REMOVE_SELECTED : 'USER_REMOVE_SELECTED',
-    USER_UPDATE_CREDIT : 'USER_UPDATE_CREDIT'
+    USER_UPDATE_CREDIT : 'USER_UPDATE_CREDIT',
+    USER_CHANGE_PASSWORD : 'USER_CHANGE_PASSWORD'
 } as const;
 
 export const syncActions = {
@@ -80,6 +81,10 @@ const thunkActions = {
     update_credit : {
         type: actionTypes.USER_UPDATE_CREDIT,
         service: services.update_credit,
+    },
+    change_password : {
+        type : actionTypes.USER_CHANGE_PASSWORD,
+        service : services.change_password
     }
     
 };
@@ -153,6 +158,12 @@ export const UserReducer = (
             };
 
         case actionTypes.USER_UPDATE_CREDIT : 
+            return {
+                ...state,
+                selected_user : action.payload.user,
+            };
+
+        case actionTypes.USER_CHANGE_PASSWORD : 
             return {
                 ...state,
                 selected_user : action.payload.user,

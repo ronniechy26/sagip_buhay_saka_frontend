@@ -11,6 +11,7 @@ import { getUserStatus } from '../../../selectors/UserSelector';
 import AddEditUserModal from './AddEditUser';
 import UpdateCreditModal from '../components/UpdateCreditModal';
 import { IUser } from '../../../models/UserModel';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -26,6 +27,7 @@ const UserMngt : React.FC<IProps> = ({
     update_user,
     remove_user_selected,
     update_credit,
+    change_password,
     selected_user,
     list, 
     status, 
@@ -36,6 +38,7 @@ const UserMngt : React.FC<IProps> = ({
     const toggleVisible : (e: React.MouseEvent<HTMLElement, MouseEvent>) => void = () =>  setVisible(!visible);
     const [action, setAction ] = useState<IAction>('add');
     const [visibleCredit, setVisibleCredit] = useState(false);
+    const [changePasswordVisible, setChangePasswordVisible] = useState(false);
 
     React.useEffect(() =>{
         fetch_users({});
@@ -93,6 +96,7 @@ const UserMngt : React.FC<IProps> = ({
                                 fetch_user={fetch_user}
                                 setVisible={setVisible}
                                 setVisibleCredit={setVisibleCredit}
+                                setChangePasswordVisible={setChangePasswordVisible}
                                 setAction={setAction}
                                 deactivate_user={deactivate_user}
                                 activate_user={activate_user}
@@ -110,6 +114,13 @@ const UserMngt : React.FC<IProps> = ({
                 status={status}
                 selected_user={selected_user as IUser}
                 update_credit={update_credit}
+            />
+            <ChangePasswordModal
+                visible={changePasswordVisible}
+                setVisible={setChangePasswordVisible}
+                status={status}
+                selected_user={selected_user as IUser}
+                change_password={change_password}
             />
         </React.Fragment>
     )
@@ -132,7 +143,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
             fetch_user : asyncActions.set_selected_user,
             update_user : asyncActions.update_user,
             remove_user_selected  : syncActions.remove_user_selected,
-            update_credit : asyncActions.update_credit
+            update_credit : asyncActions.update_credit,
+            change_password : asyncActions.change_password
         },
         dispatch
     );
