@@ -253,6 +253,7 @@ const subs = [
     'planting',
     'seed','other',
     'climate_data',
+    'hazard'
     // 'actualrainfall',
     // 'normalrainfall',
     // 'el_nino_rainfall',
@@ -335,12 +336,12 @@ const MenuItem : IMenu[] = [
                 name : 'Livelihood',
                 link:'/sagip/configuration/livelihood',
             },
-            // {
-            //     id : '4-4',
-            //     key : "planting",
-            //     name : 'Start Planting',
-            //     link:'/sagip/configuration/planting',
-            // },
+            {
+                id : '4-4',
+                key : "hazard",
+                name : 'Hazard',
+                link:'/sagip/configuration/hazard',
+            },
             {
                 id : '4-5',
                 key : "seed",

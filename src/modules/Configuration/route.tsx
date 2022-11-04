@@ -13,6 +13,7 @@ import PreProduction from './other_production/pages/landing';
 // import LaNinaRainfall from './la_nina_rainfall/pages/landing';
 // import ElNinoRainfall from './el_nino_rainfall/pages/landing';
 
+import Hazard from './hazard/pages/landing';
 import ClimateData from './climate_data/pages/landing';
 
 import { IState } from '../../ducks'
@@ -43,6 +44,8 @@ const ConfigurationRoute = () => {
             <Route exact path="/sagip/configuration/la_nina_rainfall" component={LaNinaRainfall}/> */}
 
             <Route exact path="/sagip/configuration/climate_data" component={ClimateData}/>
+            <Route exact path="/sagip/configuration/hazard" component={Hazard}/>
+
         </Switch>
     )
 }
