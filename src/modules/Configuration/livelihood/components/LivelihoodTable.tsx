@@ -58,7 +58,7 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
             temp.splice( currentPage * 10 - 10, 0, {
                 is_active: true,
                 livelihood_name: "",
-                risk : [],
+                // risk : [],
                 production_stage : [],
                 id: 'new'
             })
@@ -190,27 +190,27 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
             key: 'production_stage',
             render: (val : any, rowData : any) => render_tags(val, rowData),
         },
-        {
-            title: 'Hazard',
-            dataIndex: 'hazard',
-            editable: true,
-            key: 'hazard',
-            render: (val : any, rowData : any) => render_tags(val, rowData),
-        },
-        {
-            title: 'Risk',
-            dataIndex: 'risk',
-            editable: true,
-            key: 'risk',
-            render: (val : any, rowData : any) => render_tags(val, rowData),
-        },
-        {
-            title: 'Advice',
-            dataIndex: 'advice',
-            editable: true,
-            key: 'advice',
-            render: (val : any, rowData : any) => render_tags(val, rowData),
-        },
+        // {
+        //     title: 'Hazard',
+        //     dataIndex: 'hazard',
+        //     editable: true,
+        //     key: 'hazard',
+        //     render: (val : any, rowData : any) => render_tags(val, rowData),
+        // },
+        // {
+        //     title: 'Risk',
+        //     dataIndex: 'risk',
+        //     editable: true,
+        //     key: 'risk',
+        //     render: (val : any, rowData : any) => render_tags(val, rowData),
+        // },
+        // {
+        //     title: 'Advice',
+        //     dataIndex: 'advice',
+        //     editable: true,
+        //     key: 'advice',
+        //     render: (val : any, rowData : any) => render_tags(val, rowData),
+        // },
         {
             title: 'Created',
             dataIndex: 'created_at',
@@ -255,7 +255,6 @@ const LivelihoodTable = React.forwardRef((props : IProps, ref) => {
         };
     });
 
-    
     const TableOnChange = (pagination, filter, sorter) =>{
         setCurrentPage(pagination.current);
     }
