@@ -8,6 +8,7 @@ import { PlusOutlined} from '@ant-design/icons';
 import { IState } from '../../../../ducks';
 import ClimateDataTable from '../components/ClimateDataTable';
 import ClimateDataDrawer from '../components/ClimateDataDrawer';
+import ClimateDataDrawerUpload from '../components/ClimateDataDrawerUpload';
 import { asyncActions } from '../../../../ducks/ClimateDataDucks';
 import { getClimateDataStatus } from '../../../../selectors/ClimateDataSelectors';
 import { IClimateData } from '../../../../models/ClimateDataModel';
@@ -28,6 +29,8 @@ const ClimateDataLanding : React.FC<IProps> = ({
 }) => {
 
     const [visible, setVisible] = useState(false);
+    const [uploadVisible, setUploadVisible] = useState(false);
+
     const [action, setAction] =useState<'add' | 'edit'>('add');
     const fetch_loading = (status['CLIMATEDATA_FETCH'] ? status['CLIMATEDATA_FETCH'].fetching : false);
 
@@ -52,19 +55,38 @@ const ClimateDataLanding : React.FC<IProps> = ({
                             {`No. of Climate Data: `}
                             <Table.Count> {list ? list.length : '0'} </Table.Count>
                         </Table.Title>
-                        <Table.ButtonWrapper>
-                            <Button 
-                                type="primary" 
-                                size="middle"
-                                icon={<PlusOutlined />}
-                                onClick={() =>{
-                                    setVisible((prev) => !prev);
-                                    setAction('add');
-                                }}
-                            >
-                                Add Climate Data
-                            </Button>
-                        </Table.ButtonWrapper>
+
+                        <div>
+                            <Table.ButtonWrapper>
+                                <Button 
+                                    style={{width : "200px", textAlign : "left", marginBottom : "10px"}}
+                                    type="primary" 
+                                    size="middle"
+                                    icon={<PlusOutlined />}
+                                    onClick={() =>{
+                                        setVisible((prev) => !prev);
+                                        setAction('add');
+                                    }}
+                                >
+                                    Add Climate Data
+                                </Button>
+                            </Table.ButtonWrapper>
+                            <Table.ButtonWrapper>
+                                <Button 
+                                    style={{width : "200px", textAlign : "left"}}
+                                    type="primary" 
+                                    size="middle"
+                                    icon={<PlusOutlined />}
+                                    onClick={() =>{
+                                        setUploadVisible((prev) => !prev);
+                                        setAction('add');
+                                    }}
+                                >
+                                    Upload Climate Data
+                                </Button>
+                            </Table.ButtonWrapper>
+                        </div>
+                    
                     </Table.Header>
                     <Table>
                         <ClimateDataTable
@@ -76,6 +98,7 @@ const ClimateDataLanding : React.FC<IProps> = ({
                     </Table>
                 </Container.Card>
             </Container>
+
             <ClimateDataDrawer
                 data={selected_data as IClimateData}
                 status={status}
@@ -86,6 +109,15 @@ const ClimateDataLanding : React.FC<IProps> = ({
                 onClose={() => setVisible((prev) => !prev)}
                 user={user}
             />
+
+            <ClimateDataDrawerUpload
+                data={selected_data as IClimateData}
+                status={status}
+                visible={uploadVisible}
+                onClose={() => setUploadVisible((prev) => !prev)}
+                user={user}
+            />
+
         </Fragment>
        
     )

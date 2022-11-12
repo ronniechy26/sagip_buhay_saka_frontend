@@ -11,6 +11,9 @@ export const data_input  : Array<string>= [
     'El Nino',
     'La Nina',
     'Actual Year',
-    'Forecast',
     '2050 Projection',
+    '10 Day Forecast',
+    'Seasonal Forecast'
 ];
+
+export const TEMPLATE_LINK = "uploads/TEMPLATE/sagip-climatedata-template.xlsx"
