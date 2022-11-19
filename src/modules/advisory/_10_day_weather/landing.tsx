@@ -81,7 +81,6 @@ const Landing: React.FC<IProps> = ({
     const [count] = useGetNumberOfRecipient();
     const [province] = useGetProvince();
 
-    console.log(hazards)
     useEffect(() => {
         fetch_livelihoods();
     }, [fetch_livelihoods])

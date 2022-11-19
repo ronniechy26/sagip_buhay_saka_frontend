@@ -8,6 +8,7 @@ import { ILivelihood } from '../../../../models/LivelihoodModel';
 import { FormInstance } from 'antd/lib/form';
 import { find } from 'lodash';
 import { IHazard } from '../../../../models/HazardModel';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
     item: ILivelihoodList;
@@ -52,7 +53,7 @@ const LivelihoodList: React.FC<IProps> = ({
 
 
     useEffect(() => {
-        setHazard(hazards)
+        if(hazards) setHazard(hazards)
     }, [hazards])
 
 
@@ -60,9 +61,18 @@ const LivelihoodList: React.FC<IProps> = ({
         fetch_hazard_by_id(id);
     } 
 
+    const hazards_options = hazard.map((item : IHazard, i : number) => {
+        return {
+            key : uuidv4(),
+            value : item.id,
+            label : item.hazard,
+            hazard : item
+        }
+    })
 
     return (
         <div
+            key={uuidv4()}
             style={{ borderBottom: '1px solid #006064', marginTop: '10px' }}
         >
             <Row>
@@ -133,19 +143,13 @@ const LivelihoodList: React.FC<IProps> = ({
                     <div>
                         <SpanStyle>
                             <SelectStyled
+                                key={index}
                                 value={item.hazard}
                                 onChange={(val, data: any) => {
-                                    hazardChange(index, val, data.hazard.risk, data.hazard.advisory)
+                                    hazardChange(index, data.hazard.hazard, data.hazard.risk, data.hazard.advisory)
                                 }}
-                            >
-                                {hazard.map((item, index) => {
-                                    return (
-                                        <Select.Option value={item.hazard} key={index} hazard={item}>
-                                            {item.hazard}
-                                        </Select.Option>
-                                    )
-                                })}
-                            </SelectStyled>
+                                options={hazards_options}
+                            />
                         </SpanStyle>
                     </div>
                 </Col>
