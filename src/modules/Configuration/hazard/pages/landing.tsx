@@ -8,7 +8,9 @@ import HazardTable from '../components/HazardTable';
 import { IHazard } from '../../../../models/HazardModel';
 import { IState } from '../../../../ducks';
 import { asyncActions } from '../../../../ducks/HazardDucks';
+import { asyncActions as livelihood_async_actions } from '../../../../ducks/LivelihoodDucks';
 import { getHazardStatus } from '../../../../selectors/HazardSelector'; 
+import { ILivelihood } from '../../../../models/LivelihoodModel';
 
 type IProps = ReturnType<typeof mapStateToProps> &
     ReturnType<typeof mapDispatchToProps>;
@@ -19,6 +21,8 @@ const Landing : React.FC<IProps> = ({
     update_hazard,
     deactivate_hazard,
     activate_hazard,
+    fetch_livelihood,
+    list_livelihood,
     list, 
     status, 
     data
@@ -29,6 +33,11 @@ const Landing : React.FC<IProps> = ({
     useEffect(() =>{
         fetch_hazards();
     }, [fetch_hazards, data])
+
+    useEffect(() => {
+        fetch_livelihood()
+    }, [fetch_livelihood])
+    
 
     return (
         <Fragment>
@@ -56,6 +65,7 @@ const Landing : React.FC<IProps> = ({
                     <Table>
                         <HazardTable
                             list={list as IHazard[]}
+                            list_livelihood={list_livelihood as ILivelihood[]}
                             ref={childRef}
                             loading={fetch_loading}
                             add_hazard={add_hazard}
@@ -74,7 +84,8 @@ const Landing : React.FC<IProps> = ({
 const mapStateToProps = (state: IState) => ({
     list : state.HazardReducer.list,
     status : getHazardStatus(state),
-    data : state.HazardReducer.data
+    data : state.HazardReducer.data,
+    list_livelihood : state.LivelihoodReducer.list
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) =>
@@ -84,7 +95,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
             add_hazard : asyncActions.add_hazard,
             update_hazard : asyncActions.update_hazard,
             deactivate_hazard : asyncActions.deactivate_hazard,
-            activate_hazard : asyncActions.activate_hazard
+            activate_hazard : asyncActions.activate_hazard,
+            fetch_livelihood : livelihood_async_actions.fetch_livelihoods
         },
         dispatch
     );

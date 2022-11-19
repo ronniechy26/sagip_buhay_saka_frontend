@@ -7,8 +7,9 @@ import useTableSearch from '../../../../hooks/useTableSearch';
 import useTableFilterDate from '../../../../hooks/useTableFilterDate';
 import useFocus from '../../../../hooks/useFocus';
 import { Switch as SwitchWrapper, ActionButton } from '../../../../components/index'
-import { EditableCell, isAdding, remove_row, isEditing } from '../../selectors';
+import { EditableCell, isAdding, remove_row, isEditing } from '../../selectors_hazard';
 import { IHazard } from '../../../../models/HazardModel';
+import { ILivelihood } from '../../../../models/LivelihoodModel';
 
 interface IProps {
     list : Array<IHazard>;
@@ -17,7 +18,8 @@ interface IProps {
     update_hazard : (data : IHazard, id : string) => void;
     deactivate_hazard : (id : string) => void;
     activate_hazard : (id : string) => void;
-    status : any
+    status : any;
+    list_livelihood : ILivelihood[]
 }
 
 const HazardTable = React.forwardRef((props : IProps, ref) => {
@@ -46,6 +48,7 @@ const HazardTable = React.forwardRef((props : IProps, ref) => {
             //inserting the new object on top of current page
             let temp = [...data];
             temp.splice( currentPage * 10 - 10, 0, {
+                livelihood_id : 0,
                 is_active: true,
                 hazard : "",
                 risk : "",
@@ -150,6 +153,15 @@ const HazardTable = React.forwardRef((props : IProps, ref) => {
  
     const columns : Array<any>= [
         {
+            
+            title: 'Livelihood',
+            dataIndex: 'livelihood_id',
+            editable: true,
+            key: 'livelihood_id',
+            render : (data) => render_livelihood(data)
+        },
+        {
+            
             title: 'Hazard',
             dataIndex: 'hazard',
             editable: true,
@@ -217,6 +229,8 @@ const HazardTable = React.forwardRef((props : IProps, ref) => {
             dataIndex: column.dataIndex,
             title: column.title,
             editing: isEditing(record, editingKey),
+            inputType : inputType(column.dataIndex),
+            list_livelihood : props.list_livelihood,
             nodeRef
           }),
         };
@@ -225,6 +239,29 @@ const HazardTable = React.forwardRef((props : IProps, ref) => {
     
     const TableOnChange = (pagination, filter, sorter) =>{
         setCurrentPage(pagination.current);
+    }
+
+
+    const inputType = (dataIndex : string) => {
+        switch (dataIndex) {
+            case 'livelihood_id':
+                return 1;
+            case 'advisory':
+            case 'risk':
+            case 'hazard':
+                return 2;
+            default:
+                break;
+        }
+    }
+
+    const render_livelihood = (data) => {
+        if(props.list_livelihood && props.list_livelihood.length > 0 ) {
+            console.log(props.list_livelihood)
+            const livelihood = props.list_livelihood.find(x => x.id === data.toString());
+    
+            return livelihood?.livelihood_name;
+        }
     }
 
     return (

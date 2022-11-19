@@ -11,6 +11,7 @@ import services from '../services/HazardService';
 
 export const actionTypes = {
     HAZARD_FETCH_LIST: 'HAZARD_FETCH_LIST',
+    HAZARD_FETCH_LIST_ID : 'HAZARD_FETCH_LIST_ID',
     HAZARD_ADD : 'HAZARD_ADD',
     HAZARD_UPDATE : 'HAZARD_UPDATE',
     HAZARD_DEACTIVATE : 'HAZARD_DEACTIVATE',
@@ -21,6 +22,10 @@ const thunkActions = {
     fetch_hazards: {
         type: actionTypes.HAZARD_FETCH_LIST,
         service: services.fetch_hazards,
+    },
+    fetch_hazards_by_id: {
+        type: actionTypes.HAZARD_FETCH_LIST_ID,
+        service: services.fetch_hazards_id,
     },
     add_hazard : {
         type: actionTypes.HAZARD_ADD,
@@ -67,6 +72,12 @@ export const HazardReducer = (
 ): IHazardState => {
     switch (action.type) {
         case actionTypes.HAZARD_FETCH_LIST : 
+            return {
+                ...state,
+                list : action.payload.data,
+            };
+
+        case actionTypes.HAZARD_FETCH_LIST_ID : 
             return {
                 ...state,
                 list : action.payload.data,
