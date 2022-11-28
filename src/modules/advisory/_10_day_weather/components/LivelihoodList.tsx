@@ -16,7 +16,6 @@ interface IProps {
     livelihood_list: Array<ILivelihood>;
     LivelihoodListChange: (value, index, column) => void;
     hazardChange: (index, hazard, risk, advisory) => void;
-    fetch_hazard_by_id : (id:string) => void;
     index: number;
     form?: FormInstance<any>,
     hazards?: IHazard[]
@@ -27,7 +26,6 @@ const LivelihoodList: React.FC<IProps> = ({
     LivelihoodListChange,
     item,
     livelihood_list = [],
-    fetch_hazard_by_id,
     index,
     hazards,
     hazardChange
@@ -53,20 +51,18 @@ const LivelihoodList: React.FC<IProps> = ({
 
 
     useEffect(() => {
-        if(hazards) setHazard(hazards)
-    }, [hazards])
+        if (hazards && selectedLivelihood) {
+            const filter_hazard = hazards.filter((item) => item.livelihood_id == selectedLivelihood);
+            setHazard(filter_hazard)
+        }
+    }, [hazards, selectedLivelihood])
 
-
-    const get_hazard = (id :any) => {
-        fetch_hazard_by_id(id);
-    } 
-
-    const hazards_options = hazard.map((item : IHazard, i : number) => {
+    const hazards_options = hazard.map((item: IHazard, i: number) => {
         return {
-            key : uuidv4(),
-            value : item.id,
-            label : item.hazard,
-            hazard : item
+            key: uuidv4(),
+            value: item.id,
+            label: item.hazard,
+            hazard: item
         }
     })
 
@@ -92,7 +88,6 @@ const LivelihoodList: React.FC<IProps> = ({
                                 <SelectStyled2
                                     value={item.livelihood}
                                     onChange={(val) => {
-                                        get_hazard(val);
                                         setSelectedLivelihood(val as number);
                                         LivelihoodListChange(val, index, 'livelihood');
                                     }}

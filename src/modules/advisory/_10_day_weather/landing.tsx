@@ -66,7 +66,7 @@ const Landing: React.FC<IProps> = ({
     user_log,
     add_10_day,
     advisory_status,
-    fetch_hazard_by_id,
+    fetch_hazards,
     hazards
 }) => {
     const history = useHistory();
@@ -84,6 +84,11 @@ const Landing: React.FC<IProps> = ({
     useEffect(() => {
         fetch_livelihoods();
     }, [fetch_livelihoods])
+
+    useEffect(() => {
+        fetch_hazards()
+    }, [fetch_hazards])
+    
 
     const dateOnChange = (date, dateString: string) => {
         if (dateString === '') {
@@ -297,7 +302,6 @@ const Landing: React.FC<IProps> = ({
                                 livelihoodList.map((item, index) => {
                                     return (
                                         <LivelihoodList
-                                            fetch_hazard_by_id={fetch_hazard_by_id}
                                             form={form}
                                             key={index}
                                             index={index}
@@ -369,7 +373,8 @@ const mapDispatchToProps = (dispatch: Dispatch) =>
         {
             fetch_livelihoods: LAsyncAction.fetch_livelihoods,
             add_10_day: AdvisoryAction.add_10_day,
-            fetch_hazard_by_id: HazardAction.fetch_hazards_by_id
+            fetch_hazard_by_id: HazardAction.fetch_hazards_by_id,
+            fetch_hazards : HazardAction.fetch_hazards
         },
         dispatch
     );
