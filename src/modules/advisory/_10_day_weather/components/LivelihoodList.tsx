@@ -8,7 +8,6 @@ import { ILivelihood } from '../../../../models/LivelihoodModel';
 import { FormInstance } from 'antd/lib/form';
 import { find } from 'lodash';
 import { IHazard } from '../../../../models/HazardModel';
-import { v4 as uuidv4 } from 'uuid';
 
 interface IProps {
     item: ILivelihoodList;
@@ -59,7 +58,7 @@ const LivelihoodList: React.FC<IProps> = ({
 
     const hazards_options = hazard.map((item: IHazard, i: number) => {
         return {
-            key: uuidv4(),
+            key: item.id,
             value: item.id,
             label: item.hazard,
             hazard: item
@@ -68,7 +67,6 @@ const LivelihoodList: React.FC<IProps> = ({
 
     return (
         <div
-            key={uuidv4()}
             style={{ borderBottom: '1px solid #006064', marginTop: '10px' }}
         >
             <Row>
