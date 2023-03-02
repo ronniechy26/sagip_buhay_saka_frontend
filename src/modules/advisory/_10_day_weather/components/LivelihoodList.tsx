@@ -141,6 +141,7 @@ const LivelihoodList: React.FC<IProps> = ({
                     <div>
                         <SpanStyle>
                             <SelectStyled
+                                key={index}
                                 value={item.hazard}
                                 onChange={(val, data: any) => {
                                     hazardChange(index, data.hazard.hazard, data.hazard.risk, data.hazard.advisory)
