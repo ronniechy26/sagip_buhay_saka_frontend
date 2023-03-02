@@ -9,7 +9,11 @@ console.log('env ', process.env.NODE_ENV)
 const store = createStore(
     reducers,
     composeWithDevTools(
-        applyMiddleware(...[thunk, createLogger({ predicate: () => process.env.NODE_ENV !== 'production' }), TokenMiddleware])
+        applyMiddleware(...[
+            thunk, 
+            // createLogger({ predicate: () => process.env.NODE_ENV !== 'production' }),
+            TokenMiddleware
+        ])
     )
 );
 

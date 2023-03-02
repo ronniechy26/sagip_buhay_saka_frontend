@@ -15,6 +15,7 @@ interface IProps {
     livelihood_list: Array<ILivelihood>;
     LivelihoodListChange: (value, index, column) => void;
     hazardChange: (index, hazard, risk, advisory) => void;
+    fetch_hazard_by_id : (id:string) => void;
     index: number;
     form?: FormInstance<any>,
     hazards?: IHazard[]
@@ -25,6 +26,7 @@ const LivelihoodList: React.FC<IProps> = ({
     LivelihoodListChange,
     item,
     livelihood_list = [],
+    fetch_hazard_by_id,
     index,
     hazards,
     hazardChange
@@ -50,12 +52,23 @@ const LivelihoodList: React.FC<IProps> = ({
 
 
     useEffect(() => {
-        if (hazards && hazards.length > 0) {
-            setHazard(hazards)
-        }
+        if(hazards) setHazard(hazards)
     }, [hazards])
 
-    console.log(item)
+
+    const get_hazard = (id :any) => {
+        fetch_hazard_by_id(id);
+    } 
+
+    const hazards_options = hazard.map((item : IHazard, i : number) => {
+        return {
+            key : i,
+            value : item.id,
+            label : item.hazard,
+            hazard : item
+        }
+    })
+
     return (
         <div
             style={{ borderBottom: '1px solid #006064', marginTop: '10px' }}
@@ -77,6 +90,7 @@ const LivelihoodList: React.FC<IProps> = ({
                                 <SelectStyled2
                                     value={item.livelihood}
                                     onChange={(val) => {
+                                        get_hazard(val);
                                         setSelectedLivelihood(val as number);
                                         LivelihoodListChange(val, index, 'livelihood');
                                     }}
@@ -129,17 +143,10 @@ const LivelihoodList: React.FC<IProps> = ({
                             <SelectStyled
                                 value={item.hazard}
                                 onChange={(val, data: any) => {
-                                    hazardChange(index, val, data.hazard.risk, data.hazard.advisory)
+                                    hazardChange(index, data.hazard.hazard, data.hazard.risk, data.hazard.advisory)
                                 }}
-                            >
-                                {hazard.map((item, index) => {
-                                    return (
-                                        <Select.Option value={item.hazard} key={index} hazard={item}>
-                                            {item.hazard}
-                                        </Select.Option>
-                                    )
-                                })}
-                            </SelectStyled>
+                                options={hazards_options}
+                            />
                         </SpanStyle>
                     </div>
                 </Col>
@@ -169,9 +176,12 @@ const LivelihoodList: React.FC<IProps> = ({
                         </SpanStyle> */}
 
                         <SpanStyle>
-                            <InputStyled value={item.risk} onChange={(val) => {
-                                LivelihoodListChange(val.target.value, index, 'risk')
-                            }} />
+                            <InputStyled 
+                                value={item.risk} 
+                                onChange={(val) => {
+                                    LivelihoodListChange(val.target.value, index, 'risk')
+                                }} 
+                            />
                         </SpanStyle>
                     </div>
                 </Col>
@@ -200,7 +210,10 @@ const LivelihoodList: React.FC<IProps> = ({
                         </SpanStyle> */}
 
                         <SpanStyle>
-                            <InputStyled value={item.advisory} onChange={(val) => LivelihoodListChange(val.target.value, index, 'advisory')} />
+                            <InputStyled 
+                                value={item.advisory} 
+                                onChange={(val) => LivelihoodListChange(val.target.value, index, 'advisory')}
+                             />
                         </SpanStyle>
                     </div>
                 </Col>

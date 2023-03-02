@@ -1,8 +1,8 @@
 import axios from "axios";
 import { notification } from "antd";
-const config = { timeout: 0 };
-
 import * as dotenv from 'dotenv';
+
+const config = { timeout: 0 };
 dotenv.config();
 
 const Download = ({ params = {} }, filename, setDownloading) => {

@@ -12,6 +12,10 @@ const services = {
     return await client.get("/api/hazards", {},  HazardSchemaListPayloadSchema,
     );
   },
+  fetch_hazards_id: async (id :string) => {
+    return await client.get(`/api/hazards/${id}`, {},  HazardSchemaListPayloadSchema,
+    );
+  },
   add_hazard: async (data: IHazard) => {
     return await client.post("/api/hazard", data, HazardAddEditSchema);
   },

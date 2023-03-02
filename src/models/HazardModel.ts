@@ -2,6 +2,7 @@ import * as yup from 'yup';
 
 export const HazardSchema = yup.object({
     id : yup.string(),
+    livelihood_id: yup.number().required(),
     hazard: yup.string().required(),
     risk: yup.string().required(),
     advisory: yup.string().required(),
