@@ -15,6 +15,7 @@ interface IProps {
     livelihood_list: Array<ILivelihood>;
     LivelihoodListChange: (value, index, column) => void;
     hazardChange: (index, hazard, risk, advisory) => void;
+    fetch_hazard_by_id : (id:string) => void;
     index: number;
     form?: FormInstance<any>,
     hazards?: IHazard[]
@@ -25,6 +26,7 @@ const LivelihoodList: React.FC<IProps> = ({
     LivelihoodListChange,
     item,
     livelihood_list = [],
+    fetch_hazard_by_id,
     index,
     hazards,
     hazardChange
@@ -50,18 +52,20 @@ const LivelihoodList: React.FC<IProps> = ({
 
 
     useEffect(() => {
-        if (hazards && selectedLivelihood) {
-            const filter_hazard = hazards.filter((item) => item.livelihood_id == selectedLivelihood);
-            setHazard(filter_hazard)
-        }
-    }, [hazards, selectedLivelihood])
+        if(hazards) setHazard(hazards)
+    }, [hazards])
 
-    const hazards_options = hazard.map((item: IHazard, i: number) => {
+
+    const get_hazard = (id :any) => {
+        fetch_hazard_by_id(id);
+    } 
+
+    const hazards_options = hazard.map((item : IHazard, i : number) => {
         return {
-            key: item.id,
-            value: item.id,
-            label: item.hazard,
-            hazard: item
+            key : i,
+            value : item.id,
+            label : item.hazard,
+            hazard : item
         }
     })
 
@@ -86,6 +90,7 @@ const LivelihoodList: React.FC<IProps> = ({
                                 <SelectStyled2
                                     value={item.livelihood}
                                     onChange={(val) => {
+                                        get_hazard(val);
                                         setSelectedLivelihood(val as number);
                                         LivelihoodListChange(val, index, 'livelihood');
                                     }}
@@ -172,9 +177,12 @@ const LivelihoodList: React.FC<IProps> = ({
                         </SpanStyle> */}
 
                         <SpanStyle>
-                            <InputStyled value={item.risk} onChange={(val) => {
-                                LivelihoodListChange(val.target.value, index, 'risk')
-                            }} />
+                            <InputStyled 
+                                value={item.risk} 
+                                onChange={(val) => {
+                                    LivelihoodListChange(val.target.value, index, 'risk')
+                                }} 
+                            />
                         </SpanStyle>
                     </div>
                 </Col>
@@ -203,7 +211,10 @@ const LivelihoodList: React.FC<IProps> = ({
                         </SpanStyle> */}
 
                         <SpanStyle>
-                            <InputStyled value={item.advisory} onChange={(val) => LivelihoodListChange(val.target.value, index, 'advisory')} />
+                            <InputStyled 
+                                value={item.advisory} 
+                                onChange={(val) => LivelihoodListChange(val.target.value, index, 'advisory')}
+                             />
                         </SpanStyle>
                     </div>
                 </Col>
