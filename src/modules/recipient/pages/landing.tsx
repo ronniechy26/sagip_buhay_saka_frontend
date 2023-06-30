@@ -40,7 +40,7 @@ const RecipientLanding : React.FC<IProps> = ({
                         <div>
                             <div>
                                 <Container.TitleLabel>Globe :</Container.TitleLabel>
-                                <Container.TitleValue>{'21589998 '}</Container.TitleValue>
+                                <Container.TitleValue>{'225687 '}</Container.TitleValue>
                             </div>
                            <div>
                                 <Container.TitleLabel>Cross Telco :</Container.TitleLabel>
